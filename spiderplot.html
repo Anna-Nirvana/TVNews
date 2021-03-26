@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<title>Smoothed D3.js Radar Chart</title>
+
+		<!-- Google fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+
+		<!-- D3.js -->
+		<script src="https://d3js.org/d3.v3.min.js"></script>
+		
+		<style>
+			.radarChartM, .radarChartF {
+                display: inline-block;
+                position: relative;
+                max-height: 50vh;
+                /* height: 45%;
+                width: 40%; */
+                margin: 0;
+                scale: 0.8;
+            }
+            
+            body {
+				font-family: 'Open Sans', sans-serif;
+				font-size: 11px;
+				font-weight: 300;
+				fill: #242424;
+				text-align: center;
+				text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+				cursor: default;
+			}
+			
+			.legend {
+				font-family: 'Raleway', sans-serif;
+				fill: #333333;
+			}
+
+            .keybar {
+                /* margin-top: 90vh; */
+                position: relative;
+                margin-top: 10%;
+                z-index: 2;
+            }
+
+            #one {
+                background-color: #200ba3;
+                
+            }
+
+            #two {
+                background-color: #9da662;
+                
+            }
+
+            #three {
+                background-color: #75f0c3;
+                
+            }
+
+            #four {
+                background-color: #66263d;
+                
+            }
+			
+			.tooltip {
+				fill: #333333;
+			}
+		</style>
+	
+	</head>
+	<body>
+
+        <div class = "keybar" class ="legend">
+            <div id = "one">Age 18-24</div>
+            <div id = "two">Age 25-34</div>
+            <div id = "three">Age 35-44</div>
+            <div id = "four">Age 45-54</div> 
+        </div>
+
+		<div class="radarChartF">
+            <h1> News drivers: female demographics </h1>
+        </div>
+        <div class="radarChartM">
+            <h1> News drivers: male demographics </h1>
+        </div>
+
+		<script src="spiderplot.js"></script>	
+		
+        <script>
+
+      /* Radar chart design created by Nadieh Bremer - VisualCinnamon.com */
+
+			////////////////////////////////////////////////////////////// 
+			//////////////////////// Set-Up ////////////////////////////// 
+			////////////////////////////////////////////////////////////// 
+
+			var margin = {top: 100, right: 100, bottom: 100, left: 100},
+				width = Math.min(700, window.innerWidth - 10) - margin.left - margin.right,
+				height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
+					
+			////////////////////////////////////////////////////////////// 
+			////////////////////////// Data ////////////////////////////// 
+			////////////////////////////////////////////////////////////// 
+
+			//var data = d3.csv('newsDriversTest.csv');
+
+            var dataF = [
+                        //Females 18-24
+                        [{axis:"Factual",value:0.86},
+						{axis:"Unbiased",value:0.88},
+						{axis:"Up-to-the-minute",value:0.69},
+						{axis:"Clear and understandable",value:0.79},
+						{axis:"Understands local area",value:0.67},
+						{axis:"Investigative reporting",value:0.70},
+						{axis:"Addresses local problems",value:0.64},
+						{axis:"Impact on you",value:0.66},
+                        {axis:"Exclusive stories",value:0.58},
+                        {axis:"Visually compelling",value:0.64},
+                        {axis:"Legible graphics and animation",value:.63},
+                        {axis:"Innovative graphics",value:0.44},
+                        {axis:"Contemporary look and feel",value:0.44}],
+
+                        //Females 25-34
+                        [{axis:"Factual",value:0.86},
+						{axis:"Unbiased",value:0.83},
+						{axis:"Up-to-the-minute",value:0.83},
+						{axis:"Clear and understandable",value:0.85},
+						{axis:"Understands local area",value:0.83},
+						{axis:"Investigative reporting",value:0.82},
+						{axis:"Addresses local problems",value:0.76},
+						{axis:"Impact on you",value:0.72},
+                        {axis:"Exclusive stories",value:0.70},
+                        {axis:"Visually compelling",value:0.74},
+                        {axis:"Legible graphics and animation",value:.66},	
+                        {axis:"Innovative graphics",value:0.60},
+                        {axis:"Contemporary look and feel",value:0.53}],
+
+                        //Females 35-44
+                        [{axis:"Factual",value:0.92},
+						{axis:"Unbiased",value:0.88},
+						{axis:"Up-to-the-minute",value:0.86},
+						{axis:"Clear and understandable",value:0.86},
+						{axis:"Understands local area",value:0.88},
+						{axis:"Investigative reporting",value:0.78},
+						{axis:"Addresses local problems",value:0.78},
+						{axis:"Impact on you",value:0.74},
+                        {axis:"Exclusive stories",value:0.75},
+                        {axis:"Visually compelling",value:0.69},
+                        {axis:"Legible graphics and animation",value:.58},	
+                        {axis:"Innovative graphics",value:0.48},
+                        {axis:"Contemporary look and feel",value:0.53}],
+
+                        //Females 45-54
+                        [{axis:"Factual",value:0.93},
+						{axis:"Unbiased",value:0.88},
+						{axis:"Up-to-the-minute",value:0.94},
+						{axis:"Clear and understandable",value:0.87},
+						{axis:"Understands local area",value:0.86},
+						{axis:"Investigative reporting",value:0.76},
+						{axis:"Addresses local problems",value:0.76},
+						{axis:"Impact on you",value:0.70},
+                        {axis:"Exclusive stories",value:0.71},
+                        {axis:"Visually compelling",value:0.62},
+                        {axis:"Legible graphics and animation",value:.52},	
+                        {axis:"Innovative graphics",value:0.46},
+                        {axis:"Contemporary look and feel",value:0.41}]
+                ];
+
+                var dataM = [
+                        //Males 18-24
+                        [{axis:"Factual",value:0.78},
+						{axis:"Unbiased",value:0.65},
+						{axis:"Up-to-the-minute",value:0.75},
+						{axis:"Clear and understandable",value:0.68},
+						{axis:"Understands local area",value:0.78},
+						{axis:"Investigative reporting",value:0.66},
+						{axis:"Addresses local problems",value:0.58},
+						{axis:"Impact on you",value:0.68},
+                        {axis:"Exclusive stories",value:0.63},
+                        {axis:"Visually compelling",value:0.73},
+                        {axis:"Legible graphics and animation",value:.60},
+                        {axis:"Innovative graphics",value:0.54},
+                        {axis:"Contemporary look and feel",value:0.57}],
+
+                        //Males 25-34
+                        [{axis:"Factual",value:0.75},
+						{axis:"Unbiased",value:0.76},
+						{axis:"Up-to-the-minute",value:0.79},
+						{axis:"Clear and understandable",value:0.77},
+						{axis:"Understands local area",value:0.77},
+						{axis:"Investigative reporting",value:0.77},
+						{axis:"Addresses local problems",value:0.77},
+						{axis:"Impact on you",value:0.84},
+                        {axis:"Exclusive stories",value:0.71},
+                        {axis:"Visually compelling",value:0.71},
+                        {axis:"Legible graphics and animation",value:.73},	
+                        {axis:"Innovative graphics",value:0.72},
+                        {axis:"Contemporary look and feel",value:0.69}],
+
+                        //Males 35-44
+                        [{axis:"Factual",value:0.87},
+						{axis:"Unbiased",value:0.89},
+						{axis:"Up-to-the-minute",value:0.89},
+						{axis:"Clear and understandable",value:0.90},
+						{axis:"Understands local area",value:0.88},
+						{axis:"Investigative reporting",value:0.85},
+						{axis:"Addresses local problems",value:0.84},
+						{axis:"Impact on you",value:0.79},
+                        {axis:"Exclusive stories",value:0.78},
+                        {axis:"Visually compelling",value:0.81},
+                        {axis:"Legible graphics and animation",value:.73},	
+                        {axis:"Innovative graphics",value:0.68},
+                        {axis:"Contemporary look and feel",value:0.68}],
+
+                        //Males 45-54
+                        [{axis:"Factual",value:0.82},
+						{axis:"Unbiased",value:0.81},
+						{axis:"Up-to-the-minute",value:0.76},
+						{axis:"Clear and understandable",value:0.79},
+						{axis:"Understands local area",value:0.78},
+						{axis:"Investigative reporting",value:0.70},
+						{axis:"Addresses local problems",value:0.70},
+						{axis:"Impact on you",value:0.68},
+                        {axis:"Exclusive stories",value:0.67},
+                        {axis:"Visually compelling",value:0.62},
+                        {axis:"Legible graphics and animation",value:.61},	
+                        {axis:"Innovative graphics",value:0.51},
+                        {axis:"Contemporary look and feel",value:0.53}]
+                ];
+
+            // console.log(data);
+			////////////////////////////////////////////////////////////// 
+			//////////////////// Draw the Chart ////////////////////////// 
+			////////////////////////////////////////////////////////////// 
+
+			var color = d3.scale.ordinal()
+				.range(["#200ba3","#9da662","#75f0c3", '#66263d' ]);
+				
+			var radarChartOptions = {
+                w: width,
+                h: height,
+                margin: margin,
+                maxValue: 0.5,
+                levels: 5,
+                roundStrokes: true,
+                color: color
+			};
+			//Call function to draw the Radar chart
+			RadarChart(".radarChartF", dataF, radarChartOptions);
+
+            RadarChart(".radarChartM", dataM, radarChartOptions);
+		</script>
+	</body>
+</html>

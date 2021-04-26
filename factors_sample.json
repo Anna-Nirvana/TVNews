@@ -1,0 +1,54 @@
+[
+    {
+        "factor": "favorable",
+        "styles": [
+            {
+                "name": "conventional",
+                "value": 70
+            },
+            {
+                "name": "animated",
+                "value": 74
+            }
+        ]
+    },
+    {
+        "factor": "interesting",
+        "styles": [
+            {
+                "name": "conventional",
+                "value": 90
+            },
+            {
+                "name": "animated",
+                "value": 91
+            }
+        ]
+    },
+    {
+        "factor": "right_amt_info",
+        "styles": [
+            {
+                "name": "conventional",
+                "value": 54
+            },
+            {
+                "name": "animated",
+                "value": 59
+            }
+        ]
+    },
+    {
+        "factor": "trust",
+        "styles": [
+            {
+                "name": "conventional",
+                "value": 79
+            },
+            {
+                "name": "animated",
+                "value": 80
+            }
+        ]
+    }
+]

@@ -1,0 +1,441 @@
+[
+    {
+        "Female": {
+            "lateTeens_earlyTwenties": [
+                {
+                    "axis": "Factual",
+                    "value": 0.86
+                },
+                {
+                    "axis": "Unbiased",
+                    "value": 0.88
+                },
+                {
+                    "axis": "Up-to-the-minute",
+                    "value": 0.69
+                },
+                {
+                    "axis": "Clear and understandable",
+                    "value": 0.79
+                },
+                {
+                    "axis": "Understands local area",
+                    "value": 0.67
+                },
+                {
+                    "axis": "Investigative reporting",
+                    "value": 0.70
+                },
+                {
+                    "axis": "Addresses local problems",
+                    "value": 0.64
+                },
+                {
+                    "axis": "Impact on you",
+                    "value": 0.66
+                },
+                {
+                    "axis": "Exclusive stories",
+                    "value": 0.58
+                },
+                {
+                    "axis": "Visually compelling",
+                    "value": 0.64
+                },
+                {
+                    "axis": "Legible graphics and animation",
+                    "value": 0.63
+                },
+                {
+                    "axis": "Innovative graphics",
+                    "value": 0.44
+                },
+                {
+                    "axis": "Contemporary look and feel",
+                    "value": 0.44
+                }
+            ],
+            "lateTwenties_earlyThirties": [
+                {
+                    "axis": "Factual",
+                    "value": 0.86
+                },
+                {
+                    "axis": "Unbiased",
+                    "value": 0.83
+                },
+                {
+                    "axis": "Up-to-the-minute",
+                    "value": 0.83
+                },
+                {
+                    "axis": "Clear and understandable",
+                    "value": 0.85
+                },
+                {
+                    "axis": "Understands local area",
+                    "value": 0.83
+                },
+                {
+                    "axis": "Investigative reporting",
+                    "value": 0.82
+                },
+                {
+                    "axis": "Addresses local problems",
+                    "value": 0.76
+                },
+                {
+                    "axis": "Impact on you",
+                    "value": 0.72
+                },
+                {
+                    "axis": "Exclusive stories",
+                    "value": 0.70
+                },
+                {
+                    "axis": "Visually compelling",
+                    "value": 0.74
+                },
+                {
+                    "axis": "Legible graphics and animation",
+                    "value": 0.66
+                },
+                {
+                    "axis": "Innovative graphics",
+                    "value": 0.60
+                },
+                {
+                    "axis": "Contemporary look and feel",
+                    "value": 0.53
+                }
+            ],
+            "lateThirties_earlyForties": [
+                {
+                    "axis": "Factual",
+                    "value": 0.92
+                },
+                {
+                    "axis": "Unbiased",
+                    "value": 0.88
+                },
+                {
+                    "axis": "Up-to-the-minute",
+                    "value": 0.86
+                },
+                {
+                    "axis": "Clear and understandable",
+                    "value": 0.86
+                },
+                {
+                    "axis": "Understands local area",
+                    "value": 0.88
+                },
+                {
+                    "axis": "Investigative reporting",
+                    "value": 0.78
+                },
+                {
+                    "axis": "Addresses local problems",
+                    "value": 0.78
+                },
+                {
+                    "axis": "Impact on you",
+                    "value": 0.74
+                },
+                {
+                    "axis": "Exclusive stories",
+                    "value": 0.75
+                },
+                {
+                    "axis": "Visually compelling",
+                    "value": 0.69
+                },
+                {
+                    "axis": "Legible graphics and animation",
+                    "value": 0.58
+                },
+                {
+                    "axis": "Innovative graphics",
+                    "value": 0.48
+                },
+                {
+                    "axis": "Contemporary look and feel",
+                    "value": 0.53
+                }
+            ],
+            "lateForties_earlyFifties": [
+                {
+                    "axis": "Factual",
+                    "value": 0.93
+                },
+                {
+                    "axis": "Unbiased",
+                    "value": 0.88
+                },
+                {
+                    "axis": "Up-to-the-minute",
+                    "value": 0.94
+                },
+                {
+                    "axis": "Clear and understandable",
+                    "value": 0.87
+                },
+                {
+                    "axis": "Understands local area",
+                    "value": 0.86
+                },
+                {
+                    "axis": "Investigative reporting",
+                    "value": 0.76
+                },
+                {
+                    "axis": "Addresses local problems",
+                    "value": 0.76
+                },
+                {
+                    "axis": "Impact on you",
+                    "value": 0.70
+                },
+                {
+                    "axis": "Exclusive stories",
+                    "value": 0.71
+                },
+                {
+                    "axis": "Visually compelling",
+                    "value": 0.62
+                },
+                {
+                    "axis": "Legible graphics and animation",
+                    "value": 0.52
+                },
+                {
+                    "axis": "Innovative graphics",
+                    "value": 0.46
+                },
+                {
+                    "axis": "Contemporary look and feel",
+                    "value": 0.41
+                }
+            ]
+        },
+
+        "Male": {
+            "lateTeens_earlyTwenties": [
+                {
+                    "axis": "Factual",
+                    "value": 0.78
+                },
+                {
+                    "axis": "Unbiased",
+                    "value": 0.65
+                },
+                {
+                    "axis": "Up-to-the-minute",
+                    "value": 0.75
+                },
+                {
+                    "axis": "Clear and understandable",
+                    "value": 0.68
+                },
+                {
+                    "axis": "Understands local area",
+                    "value": 0.78
+                },
+                {
+                    "axis": "Investigative reporting",
+                    "value": 0.66
+                },
+                {
+                    "axis": "Addresses local problems",
+                    "value": 0.58
+                },
+                {
+                    "axis": "Impact on you",
+                    "value": 0.68
+                },
+                {
+                    "axis": "Exclusive stories",
+                    "value": 0.63
+                },
+                {
+                    "axis": "Visually compelling",
+                    "value": 0.73
+                },
+                {
+                    "axis": "Legible graphics and animation",
+                    "value": 0.60
+                },
+                {
+                    "axis": "Innovative graphics",
+                    "value": 0.54
+                },
+                {
+                    "axis": "Contemporary look and feel",
+                    "value": 0.57
+                }
+            ],
+            "lateTwenties_earlyThirties": [
+                {
+                    "axis": "Factual",
+                    "value": 0.75
+                },
+                {
+                    "axis": "Unbiased",
+                    "value": 0.76
+                },
+                {
+                    "axis": "Up-to-the-minute",
+                    "value": 0.79
+                },
+                {
+                    "axis": "Clear and understandable",
+                    "value": 0.77
+                },
+                {
+                    "axis": "Understands local area",
+                    "value": 0.77
+                },
+                {
+                    "axis": "Investigative reporting",
+                    "value": 0.77
+                },
+                {
+                    "axis": "Addresses local problems",
+                    "value": 0.77
+                },
+                {
+                    "axis": "Impact on you",
+                    "value": 0.84
+                },
+                {
+                    "axis": "Exclusive stories",
+                    "value": 0.71
+                },
+                {
+                    "axis": "Visually compelling",
+                    "value": 0.71
+                },
+                {
+                    "axis": "Legible graphics and animation",
+                    "value": 0.73
+                },
+                {
+                    "axis": "Innovative graphics",
+                    "value": 0.72
+                },
+                {
+                    "axis": "Contemporary look and feel",
+                    "value": 0.69
+                }
+            ],
+            "lateThirties_earlyForties": [
+                {
+                    "axis": "Factual",
+                    "value": 0.87
+                },
+                {
+                    "axis": "Unbiased",
+                    "value": 0.89
+                },
+                {
+                    "axis": "Up-to-the-minute",
+                    "value": 0.89
+                },
+                {
+                    "axis": "Clear and understandable",
+                    "value": 0.90
+                },
+                {
+                    "axis": "Understands local area",
+                    "value": 0.88
+                },
+                {
+                    "axis": "Investigative reporting",
+                    "value": 0.85
+                },
+                {
+                    "axis": "Addresses local problems",
+                    "value": 0.84
+                },
+                {
+                    "axis": "Impact on you",
+                    "value": 0.79
+                },
+                {
+                    "axis": "Exclusive stories",
+                    "value": 0.78
+                },
+                {
+                    "axis": "Visually compelling",
+                    "value": 0.81
+                },
+                {
+                    "axis": "Legible graphics and animation",
+                    "value": 0.73
+                },
+                {
+                    "axis": "Innovative graphics",
+                    "value": 0.68
+                },
+                {
+                    "axis": "Contemporary look and feel",
+                    "value": 0.68
+                }
+            ],
+            "lateForties_earlyFifties": [
+                {
+                    "axis": "Factual",
+                    "value": 0.82
+                },
+                {
+                    "axis": "Unbiased",
+                    "value": 0.81
+                },
+                {
+                    "axis": "Up-to-the-minute",
+                    "value": 0.76
+                },
+                {
+                    "axis": "Clear and understandable",
+                    "value": 0.79
+                },
+                {
+                    "axis": "Understands local area",
+                    "value": 0.78
+                },
+                {
+                    "axis": "Investigative reporting",
+                    "value": 0.70
+                },
+                {
+                    "axis": "Addresses local problems",
+                    "value": 0.70
+                },
+                {
+                    "axis": "Impact on you",
+                    "value": 0.68
+                },
+                {
+                    "axis": "Exclusive stories",
+                    "value": 0.67
+                },
+                {
+                    "axis": "Visually compelling",
+                    "value": 0.62
+                },
+                {
+                    "axis": "Legible graphics and animation",
+                    "value": 0.61
+                },
+                {
+                    "axis": "Innovative graphics",
+                    "value": 0.51
+                },
+                {
+                    "axis": "Contemporary look and feel",
+                    "value": 0.53
+                }
+            ]
+        }
+    }
+]

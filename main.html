@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>Animation in TV News</title>
+
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+
+    <!-- D3.js V6 and jQuery -->
+    <script src="https://d3js.org/d3.v6.min.js"> </script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+    <!-- Separate script files for the charts -->
+    <script src="spiderplot_v6.js"></script>
+
+    <!-- Reference algo for the word cloud -->
+    <script src="https://rawgit.com/jasondavies/d3-cloud/master/build/d3.layout.cloud.js"></script>
+
+</head>
+
+<body>
+
+    <section id='title' class='pageBones'>
+        <h1> Title </h1>
+        <h2> Subtitle</h2>
+    </section>
+
+    <section id='intro' class='pageBones'>
+        <p> Intro to the project Intro to the project Intro to the project Intro to the project Intro to the project Intro to the project Intro to the project Intro to the project Intro to the project Intro to the project Intro to the project. </p>>
+    </section>
+
+    <section id='chunk1' class='pageBones' class='chartChunks'>
+        <h2> News Drivers</h2>
+        <p> Instructions for how to interpret the visualization below. Instructions for how to interpret the visualization below. </p>
+
+        <div id='radar_spider_charts' class='viz'>
+
+            <div id="radarChartF" class='radarChartF'>
+                <h3> News drivers: female demographics </h3>
+            </div>
+            <div id="radarChartM" class='radarChartM'>
+                <h3> News drivers: male demographics </h3>
+            </div>
+            <div id="radarChartY" class='radarChartY'>
+                <h3> News drivers: youth demographics </h3>
+            </div>
+
+            <!-- SCRIPT REF TO BUILD THE RADAR CHARTS -->
+            <script>
+
+                var margin = { top: 100, right: 100, bottom: 100, left: 100 },
+                    width = Math.min(700, window.innerWidth - 10) - margin.left - margin.right,
+                    height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
+
+                //Load data
+                d3.json('./newsDrivers.json', function (d) {
+                    return d;
+                }).then(function (data) {
+
+                    //rearrange arrays to display layers & be accessed by RadarChart fn:
+
+                    //female demo
+                    let dataF = [];
+                    dataF.push(data[0].Female.lateTeens_earlyTwenties);
+                    dataF.push(data[0].Female.lateTwenties_earlyThirties);
+                    dataF.push(data[0].Female.lateThirties_earlyForties);
+                    dataF.push(data[0].Female.lateForties_earlyFifties);
+
+                    //male demo
+                    let dataM = [];
+                    dataM.push(
+                        data[0].Male.lateTeens_earlyTwenties,
+                        data[0].Male.lateTwenties_earlyThirties,
+                        data[0].Male.lateThirties_earlyForties,
+                        data[0].Male.lateForties_earlyFifties
+                    );
+
+                    //youth demos incl. female/male
+                    let dataY = []
+                    dataY.push(
+                        data[0].Female.lateTeens_earlyTwenties,
+                        data[0].Female.lateTwenties_earlyThirties,
+                        data[0].Male.lateTeens_earlyTwenties,
+                        data[0].Female.lateTwenties_earlyThirties
+                    );
+                    //...repeat for any other combo/comparisons of interest!
+
+                    //Draw
+
+                    color =
+                        // function(j) {
+                        //     let selectedColor =
+                        d3.scaleLinear()
+                            .domain([1, 4])
+                            .interpolate(d3.interpolateHcl)
+                            .range(['#007AFF', '#FFF500']);
+                    //     return selectedColor;
+                    // }
+
+                    // color = d3.scaleLinear()
+                    //     .domain([1,4])
+                    //     .interpolate(d3.interpolateHcl)
+                    //     .range(['#007AFF', '#FFF500']);
+
+                    //color =
+                    //     d3.scaleOrdinal()
+                    //     .domain(data)
+                    //     .range(d3.schemePaired);
+
+                    var radarChartOptions = {
+                        w: width,
+                        h: height,
+                        margin: margin,
+                        maxValue: 0.95,
+                        levels: 5,
+                        color: color
+                    };
+
+                    //Call function 
+                    RadarChart(".radarChartF", dataM, radarChartOptions);
+
+                    RadarChart(".radarChartM", dataM, radarChartOptions);
+
+                    RadarChart(".radarChartY", dataM, radarChartOptions);
+
+                });
+
+            </script>
+
+            <!-- <div id='legend1' class="legends">
+                <div id="one">Age 18-24</div>
+                <div id="two">Age 25-34</div>
+                <div id="three">Age 35-44</div>
+                <div id="four">Age 45-54</div>
+            </div> -->
+
+            <p> RADAR_SPIDER analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. </p>
+        </div>
+    </section>
+
+    <section id='chunk2' class='pageBones' class='chartChunks'>
+        <h2> Animation Responses </h2>
+        <p> 1. Migrate script from v3 to v6. 2. Put in external script file and clean up comments. 3. Add miniscript into html to reference the file.  </p>
+
+        <div id='radial_bar_charts' class='viz'>
+
+            <div id="radialBar1">
+                <h3> Animation - per vid </h3>
+            </div>
+            <div id="radialBar2">
+                <h3> Animation - general avgs </h3>
+            </div>
+
+            <!-- SCRIPT REF TO BUILD THE RADIAL BAR -->
+            <script></script>
+
+            <div id='legend2' class='legends'> 
+                <!-- a legend for the radial bar -->
+            </div>
+
+            <p> RADAR_SPIDER analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. </p>
+        </div>
+    </section>
+
+    <section id='chunk3' class='pageBones' class='chartChunks'>
+        <h2> Open-Ended Keywords </h2>
+        <p> Instructions for how to interpret the visualizations below. Instructions for how to interpret the visualizations below. </p>
+
+        <div id='lollipop_cloud' class='viz'>
+
+            <div id="lollipop">
+                <h3> Use of keywords </h3>
+                    <svg id="lollyChart" width='800' height='800'> </svg>
+                <script src="keywords_lollipop.js"></script>
+
+            <div id="cloud">
+                <h3> Keywords </h3>
+            </div>
+
+            <!-- SCRIPT REF TO BUILD THE LOLLIPOP -->
+            <script></script>
+
+            <!-- SCRIPT REF TO BUILD THE WORD CLOUD -->
+            <script src='script_wordCloud.js'></script>
+
+            <!-- ^these might have to be in the same file to enable intxn -->
+
+            <p> RADAR_SPIDER analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. </p>
+        </div>
+    </section>
+
+    <section id='conclusion' class='pageBones'>
+
+        <p>Conclusion, acknowledgements, next steps, and nitty gritty data details text. Conclusion, acknowledgements, next steps, and nitty gritty data details text. Conclusion, acknowledgements, next steps, and nitty gritty data details text. </p>
+    </section>
+
+</body>
+
+</html>

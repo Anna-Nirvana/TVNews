@@ -1,21 +1,21 @@
 // set up canvas by appending svgL (L = lollipop) 
-const margin = { top: 50, right: 50, bottom: 15, left: 200 };
+const marginL = { top: 50, right: 50, bottom: 15, left: 200 };
 const svgL = d3.select('#lollyChart');
-const width = svgL.attr('width');
-const height = svgL.attr('height');
-const innerWidth = width - margin.left - margin.right; //!innerWidth is a length!
-const innerHeight = height - margin.top - margin.bottom; //!innerHeight is a length!
+const widthL = svgL.attr('width');
+const heightL = svgL.attr('height');
+const innerwidthL = widthL - marginL.left - marginL.right; //!innerwidthL is a length!
+const innerheightL = heightL - marginL.top - marginL.bottom; //!innerheightL is a length!
 
 //set up groups to append x and y axes
 const g = svgL.append('g')
-    .attr('transform', `translate(${margin.left},${margin.top})`);
+    .attr('transform', `translate(${marginL.left},${marginL.top})`);
 
 const xAxisG = g.append('g')
-    .attr('transform', `translate(0, ${innerHeight})`);
+    .attr('transform', `translate(0, ${innerheightL})`);
 const yAxisG = g.append('g');
 
 // parse the keyword (kw) data
-d3.csv("./keywords.csv")
+d3.csv('keywords.csv')
     .then(function (kw_data) {
 
         // sort kw_data
@@ -26,12 +26,12 @@ d3.csv("./keywords.csv")
         // Add X axis scale
         var xScale = d3.scaleLinear()
             .domain([0, 80])
-            .range([margin.left, margin.left + innerWidth]);
+            .range([marginL.left, marginL.left + innerwidthL]);
 
         // Add Y axis scale
         var yScale = d3.scaleBand()
             .domain(kw_data.map(function (d) { return d.keyword; }))
-            .range([margin.top, margin.top + innerHeight])
+            .range([marginL.top, marginL.top + innerheightL])
             .padding(2);
 
         svgL.selectAll("myline")
@@ -69,7 +69,7 @@ d3.csv("./keywords.csv")
             .data(kw_data)
             .join('line')
             .attr("x1", function (d) { return xScale(+d.uses); })
-            .attr("x2", margin.left)
+            .attr("x2", marginL.left)
             .attr("y1", function (d) { return yScale(d.keyword); })
             .attr("y2", function (d) { return yScale(d.keyword); })
             .attr("stroke", "grey")

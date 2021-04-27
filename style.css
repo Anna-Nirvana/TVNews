@@ -1,0 +1,88 @@
+/*OVERALL PAGE*/
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 300;
+    fill: #242424;
+    text-align: center;
+    text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+    cursor: default;
+}
+
+.pageBones {
+
+}
+
+.chartChunks{
+
+}
+
+.viz {
+
+}
+
+
+
+/* CHART CHUNK #1: RADAR CHART */
+.radarChartM,
+    .radarChartF {
+        display: inline-block;
+        position: relative;
+        max-height: 50vh;
+        margin: 0;
+        scale: 0.8;
+    }
+
+    .legend {
+        font-family: sans-serif;
+        fill: #333333;
+    }
+
+    .keybar {
+        position: relative;
+        margin-top: 10%;
+        z-index: 2;
+    }
+
+    /* color key for radar chart */
+        #one {
+            background-color: #200ba3;
+
+        }
+
+        #two {
+            background-color: #9da662;
+
+        }
+
+        #three {
+            background-color: #75f0c3;
+
+        }
+
+        #four {
+            background-color: #66263d;
+
+        }
+
+    .tooltip {
+        fill: #333333;
+    }
+
+    /* CHART CHUNK #2: RADIAL BAR */
+    body {
+        font: 10px sans-serif;
+    }
+
+    .axis path,
+    .axis line {
+        fill: none;
+        stroke: #000;
+        shape-rendering: crispEdges;
+    }
+
+    .x.axis path {
+        display: none;
+    }
+
+/* CHART CHUNK #3: WORD CLOUD AND LOLLIPOP */

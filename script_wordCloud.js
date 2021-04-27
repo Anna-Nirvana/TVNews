@@ -57,7 +57,7 @@ $(document).ready(function () {
     layout.start();
 
     function draw(words) {
-        d3.select("#wordcloud").append("svg")
+        d3.select("#cloud").append("svg")
             .style("width", "100%")
             .style("height", height + "px")
             .attr("viewBox", "0 0 " + width + " " + height)

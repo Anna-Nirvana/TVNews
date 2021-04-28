@@ -12,7 +12,7 @@ $(document).ready(function () {
         .interpolator(d3.interpolatePlasma);
 
     var words = [
-        // { "text": "graphic(s)", "size": 77 },
+        { "text": "graphic(s)", "size": 77 },
         { "text": "visual(ly)", "size": 43 },
         { "text": "easy", "size": 41 },
         { "text": "makes", "size": 39 },
@@ -44,7 +44,7 @@ $(document).ready(function () {
         //etc.,
     ];
 
-    var vis = document.getElementById("wordcloud");
+    var vis = document.getElementById("lolliCloud");
     var layout = d3.layout.cloud().size([width, height])
         .words(words)
         .padding(2)
@@ -77,11 +77,11 @@ $(document).ready(function () {
             ;
     }
 
-});
+
 
 // set up canvas by appending svgL (L = lollipop) 
-const marginL = { top: 50, right: 50, bottom: 15, left: 200 };
-const svgL = d3.select('#lollyChart');
+const marginL = { top: 0, right: 50, bottom: 50, left: 200 };
+const svgL = d3.select('#lollipop');
 const widthL = svgL.attr('width');
 const heightL = svgL.attr('height');
 const innerwidthL = widthL - marginL.left - marginL.right; //!innerwidthL is a length!
@@ -92,7 +92,7 @@ const g = svgL.append('g')
     .attr('transform', `translate(${marginL.left},${marginL.top})`);
 
 const xAxisG = g.append('g')
-    .attr('transform', `translate(0, ${innerheightL})`);
+    .attr('transform', `translate(-200, ${innerheightL})`);
 const yAxisG = g.append('g');
 
 // parse the keyword (kw) data
@@ -106,44 +106,29 @@ d3.csv('keywords.csv')
 
         // Add X axis scale
         var xScale = d3.scaleLinear()
-            .domain([0, 80])
+            .domain([0, 50])
             .range([marginL.left, marginL.left + innerwidthL]);
 
         // Add Y axis scale
         var yScale = d3.scaleBand()
             .domain(kw_data.map(function (d) { return d.keyword; }))
             .range([marginL.top, marginL.top + innerheightL])
-            .padding(2);
-
-        svgL.selectAll("myline")
-            .data(kw_data)
-            .join('line')
-            .attr("x1", xScale(0))
-            .attr("x2", xScale(80))
-            .attr("y1", yScale("graphic(s)"))
-            .attr("y2", yScale("graphic(s)"))
-            .attr("stroke", "red")
-
-        svgL.selectAll("myline")
-            .data(kw_data)
-            .join('line')
-            .attr("x1", xScale(0))
-            .attr("x2", xScale(80))
-            .attr("y1", yScale("catch(ing)/caught"))
-            .attr("y2", yScale("catch(ing)/caught"))
-            .attr("stroke", "red")
+            .padding(1);
 
         // Draw X axis, add labels
         xAxisG.call(d3.axisBottom(xScale))
             .selectAll('text', 'g')
             .attr('classed', 'axis-label', true)
-            // .attr('transform', 'translate(-0,0)')
-            .style('text-anchor', 'end');
+            .attr('transform', 'translate(2,0)')
+            .style('text-anchor', 'center' );
 
 
         // Draw Y axis, add labels (?)
         yAxisG.call(d3.axisLeft(yScale))
-        // .attr('transform', 'translate(0,-0)')
+            .selectAll('text', 'g')
+            .attr('classed', 'axis-label', true)
+            // .attr('transform', 'translate(0,0)')
+            .style('text-anchor', 'end');
 
         // Lines
         svgL.selectAll("myline")
@@ -153,23 +138,18 @@ d3.csv('keywords.csv')
             .attr("x2", marginL.left)
             .attr("y1", function (d) { return yScale(d.keyword); })
             .attr("y2", function (d) { return yScale(d.keyword); })
-            .attr("stroke", "grey")
+            .attr("stroke", "grey");
 
         // Circles
         svgL.selectAll("mycircle")
             .data(kw_data)
-            .enter()
-            .append("circle")
+            .join("circle")
             .attr("cx", function (d) { return xScale(+d.uses); })
             .attr("cy", function (d) { return yScale(d.keyword); })
             .attr("r", "7")
-            .style("fill", "#69b3a2")
-            .attr("stroke", "black")
-
-
-
-
-
-
+            .style("fill", "#008800")
+            .attr("stroke", "black");
 
     });
+
+});

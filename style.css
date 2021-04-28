@@ -1,24 +1,58 @@
 /*OVERALL PAGE*/
 body {
     font-family: 'Open Sans', sans-serif;
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 300;
     fill: #242424;
-    text-align: center;
-    text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+    color: navy;
+    text-align: justify;
+    /* text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff; */
     cursor: default;
+    margin: 10vh;
 }
 
-.pageBones {
+h1 {
+    font-family: 'Raleway';
+    font-size: x-large;
+}
 
+#subtitle {
+    background-color: none;
+}
+
+h2, title {
+
+    background-color: #ffe1b393;
+    border-radius: 8px;
+
+}
+
+h2 {
+    font-size: large;
+    font-weight: bold;
+    padding: 10px;
+    padding-top: 3vh;
+    padding-bottom: 3vh;
+    text-align: center;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.801), 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+}
+
+#title{
+    background-color: #ffe1b393;
+    border-radius: 8px;
+    padding: 30px;
+    color: navy;
 }
 
 .chartChunks{
-
+    padding: 0px
 }
 
 .viz {
-
+    margin-left: 0
+    margin-right: 
+    margin-top:
+    margin-bottom:
 }
 
 
@@ -70,9 +104,6 @@ body {
     }
 
     /* CHART CHUNK #2: RADIAL BAR */
-    body {
-        font: 10px sans-serif;
-    }
 
     .axis path,
     .axis line {

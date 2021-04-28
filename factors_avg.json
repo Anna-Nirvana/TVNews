@@ -1,0 +1,93 @@
+[
+    {
+        "factor": "boring",
+        "styles": [
+            {
+                "name": "conventional",
+                "value": 0.18
+            },
+            {
+                "name": "animated",
+                "value": 0.16
+            }
+        ]
+    },
+    {
+        "factor": "well-crafted",
+        "styles": [
+            {
+                "name": "conventional",
+                "value": 0.59
+            },
+            {
+                "name": "animated",
+                "value": 0.64
+            }
+        ]
+    },
+    {
+        "factor": "visually interesting",
+        "styles": [
+            {
+                "name": "conventional",
+                "value": 0.48
+            },
+            {
+                "name": "animated",
+                "value": 0.62
+            }
+        ]
+    },
+    {
+        "factor": "memorable",
+        "styles": [
+            {
+                "name": "conventional",
+                "value": 0.53
+            },
+            {
+                "name": "animated",
+                "value": 0.57
+            }
+        ]
+    },
+        {
+        "factor": "innovative",
+        "styles": [
+            {
+                "name": "conventional",
+                "value": 0.45
+            },
+            {
+                "name": "animated",
+                "value": 0.51
+            }
+        ]
+    },
+        {
+        "factor": "understandable",
+        "styles": [
+            {
+                "name": "conventional",
+                "value": 0.74
+            },
+            {
+                "name": "animated",
+                "value": 0.77
+            }
+        ]
+    },
+        {
+        "factor": "refreshing",
+        "styles": [
+            {
+                "name": "conventional",
+                "value": 0.42
+            },
+            {
+                "name": "animated",
+                "value": 0.45
+            }
+        ]
+    }
+]

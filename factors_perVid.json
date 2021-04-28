@@ -4,11 +4,11 @@
         "styles": [
             {
                 "name": "conventional",
-                "value": 70
+                "value": 0.70
             },
             {
                 "name": "animated",
-                "value": 74
+                "value": 0.74
             }
         ]
     },
@@ -17,24 +17,24 @@
         "styles": [
             {
                 "name": "conventional",
-                "value": 90
+                "value": 0.90
             },
             {
                 "name": "animated",
-                "value": 91
+                "value": 0.91
             }
         ]
     },
     {
-        "factor": "right_amt_info",
+        "factor": "right amount of information",
         "styles": [
             {
                 "name": "conventional",
-                "value": 54
+                "value": 0.54
             },
             {
                 "name": "animated",
-                "value": 59
+                "value": 0.59
             }
         ]
     },
@@ -43,11 +43,11 @@
         "styles": [
             {
                 "name": "conventional",
-                "value": 79
+                "value": 0.79
             },
             {
                 "name": "animated",
-                "value": 80
+                "value": 0.80
             }
         ]
     }

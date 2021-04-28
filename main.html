@@ -15,6 +15,7 @@
 
     <!-- Separate script files for the charts -->
     <script src="spiderplot_v6.js"></script>
+    <script src='RadialBarFn.js'> </script>
 
     <!-- Reference algo for the word cloud -->
     <script src="https://rawgit.com/jasondavies/d3-cloud/master/build/d3.layout.cloud.js"></script>
@@ -29,12 +30,15 @@
     </section>
 
     <section id='intro' class='pageBones'>
-        <p> Intro to the project Intro to the project Intro to the project Intro to the project Intro to the project Intro to the project Intro to the project Intro to the project Intro to the project Intro to the project Intro to the project. </p>>
+        <p> Intro to the project Intro to the project Intro to the project Intro to the project Intro to the project
+            Intro to the project Intro to the project Intro to the project Intro to the project Intro to the project
+            Intro to the project. </p>>
     </section>
 
     <section id='chunk1' class='pageBones' class='chartChunks'>
         <h2> News Drivers</h2>
-        <p> Instructions for how to interpret the visualization below. Instructions for how to interpret the visualization below. </p>
+        <p> Instructions for how to interpret the visualization below. Instructions for how to interpret the
+            visualization below. </p>
 
         <div id='radar_spider_charts' class='viz'>
 
@@ -137,64 +141,129 @@
                 <div id="four">Age 45-54</div>
             </div> -->
 
-            <p> RADAR_SPIDER analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. </p>
+            <p> RADAR_SPIDER analysis para. analysis para. analysis para. analysis para. analysis para. analysis para.
+                analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para.
+                analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para.
+                analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para.
+            </p>
         </div>
     </section>
 
     <section id='chunk2' class='pageBones' class='chartChunks'>
         <h2> Animation Responses </h2>
-        <p> 1. Migrate script from v3 to v6. 2. Put in external script file and clean up comments. 3. Add miniscript into html to reference the file.  </p>
+        <p> 1. Migrate script from v3 to v6. 2. Put in external script file and clean up comments. 3. Add miniscript
+            into html to reference the file. </p>
 
         <div id='radial_bar_charts' class='viz'>
 
-            <div id="radialBar1">
+
+
+            <!-- SCRIPT REF TO BUILD THE RADIAL BAR -->
+            <script>
+                //load data and do any rearranging nec
+                d3.json('./factors_perVid.json', function (d) {
+                    return d;
+                }).then(function (dataRB_perVid) {
+
+                    //set color variable/fn
+                    var color = d3.scaleOrdinal()
+                        .range(['#e5f5d3', '#89f70a']);
+
+                    //set any other options needed
+                    var radialBarOptions = {
+                        w: 800,
+                        h: 800,
+                        margin: 40,
+                        maxValue: 1,
+                        levels: 5,
+                        color: color
+                    };
+
+                    //Call function 
+                    RadialBar("#radialBar1", dataRB_perVid, radialBarOptions);
+                });
+
+                d3.json('factors_avg.json', function (d) {
+                    return d;
+                }).then(function (dataRB_avg) {
+
+                    //set color variable/fn
+                    var color = d3.scaleOrdinal()
+                        .range(['#e5f5d3', '#89f70a']);
+
+                    //set any other options needed
+                    var radialBarOptions = {
+                        w: 800,
+                        h: 800,
+                        margin: 40,
+                        maxValue: 1,
+                        levels: 5,
+                        color: color
+                    };
+
+                    
+
+                    //Call function 
+                    RadialBar("#radialBar2", dataRB_avg, radialBarOptions);
+                });
+            </script>
+
+                        <div id="radialBar1" class="radialBar1">
                 <h3> Animation - per vid </h3>
             </div>
-            <div id="radialBar2">
+            <div id="radialBar2" class="radialBar2">
                 <h3> Animation - general avgs </h3>
             </div>
 
-            <!-- SCRIPT REF TO BUILD THE RADIAL BAR -->
-            <script></script>
-
-            <div id='legend2' class='legends'> 
+            <div id='legend2' class='legends'>
                 <!-- a legend for the radial bar -->
             </div>
 
-            <p> RADAR_SPIDER analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. </p>
+            <p> RADIAL_BAR analysis para. analysis para. analysis para. analysis para. analysis para. analysis para.
+                analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para.
+                analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para.
+                analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para.
+            </p>
         </div>
     </section>
 
     <section id='chunk3' class='pageBones' class='chartChunks'>
         <h2> Open-Ended Keywords </h2>
-        <p> Instructions for how to interpret the visualizations below. Instructions for how to interpret the visualizations below. </p>
+        <p> Instructions for how to interpret the visualizations below. Instructions for how to interpret the
+            visualizations below. </p>
 
         <div id='lollipop_cloud' class='viz'>
 
             <div id="lollipop">
                 <h3> Use of keywords </h3>
-                    <svg id="lollyChart" width='800' height='800'> </svg>
+                <svg id="lollyChart" width='800' height='800'> </svg>
                 <script src="keywords_lollipop.js"></script>
 
-            <div id="cloud">
-                <h3> Keywords </h3>
+                <div id="cloud">
+                    <h3> Keywords </h3>
+                </div>
+
+                <!-- SCRIPT REF TO BUILD THE LOLLIPOP -->
+                <script></script>
+
+                <!-- SCRIPT REF TO BUILD THE WORD CLOUD -->
+                <script src='script_wordCloud.js'></script>
+
+                <!-- ^these might have to be in the same file to enable intxn -->
+
+                <p> RADAR_SPIDER analysis para. analysis para. analysis para. analysis para. analysis para. analysis
+                    para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para.
+                    analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis
+                    para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para.
+                    analysis para. analysis para. </p>
             </div>
-
-            <!-- SCRIPT REF TO BUILD THE LOLLIPOP -->
-            <script></script>
-
-            <!-- SCRIPT REF TO BUILD THE WORD CLOUD -->
-            <script src='script_wordCloud.js'></script>
-
-            <!-- ^these might have to be in the same file to enable intxn -->
-
-            <p> RADAR_SPIDER analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. </p>
-        </div>
     </section>
 
     <section id='conclusion' class='pageBones'>
 
-        <p>Conclusion, acknowledgements, next steps, and nitty gritty data details text. Conclusion, acknowledgements, next steps, and nitty gritty data details text. Conclusion, acknowledgements, next steps, and nitty gritty data details text. </p>
+        <p>Conclusion, acknowledgements, next steps, and nitty gritty data details text. Conclusion, acknowledgements,
+            next steps, and nitty gritty data details text. Conclusion, acknowledgements, next steps, and nitty gritty
+            data details text. </p>
     </section>
 
 </body>

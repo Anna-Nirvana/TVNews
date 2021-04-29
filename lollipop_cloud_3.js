@@ -74,7 +74,7 @@ $(document).ready(function () {
     //LOLLIPOP CHART
 
     // set up canvas by grabbing base svg 
-    lolly.margin = { top: 0, right: 50, bottom: 50, left: 200 };
+    lolly.margin = { top: 20, right: 50, bottom: 50, left: 200 };
     lolly.svg = d3.select('#lollipop');
     lolly.width = lolly.svg.attr('width');
     lolly.height = lolly.svg.attr('height');
@@ -102,11 +102,14 @@ $(document).ready(function () {
     lolly.xAxis = lolly.svg.append('g')
         .classed('axis', true)
         .attr('transform', `translate(-0, ${lolly.height - lolly.margin.bottom})`)
-        .call(d3.axisBottom(lolly.xScale))
+        .call(d3.axisBottom(lolly.xScale)
+            //remove x axis tick marks
+            .tickSize([0,0]))
         .selectAll('text', 'g')
-        .attr('classed', 'axis-label', true)
-        .attr('transform', 'translate(2,0)')
-        .style('text-anchor', 'center');
+            .attr('classed', 'axis-label', true)
+            .attr('font-family', 'Open Sans')
+            .attr("transform", "translate(0,10)")
+            .style('text-anchor', 'center');
 
     // Draw Y axis, add labels
     lolly.yAxis = lolly.svg.append('g')
@@ -122,7 +125,6 @@ $(document).ready(function () {
             .attr('font-family', 'Open Sans')
             .attr("transform", "translate(-10,0)rotate(-20)")
             .attr('classed', 'axis-label', true)
-        // .attr('transform', 'translate(0,0)')
             .style('text-anchor', 'end');
 
     // axis.tickSize(0);

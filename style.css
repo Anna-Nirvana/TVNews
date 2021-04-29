@@ -108,7 +108,7 @@ h2 {
     .axis path,
     .axis line {
         fill: none;
-        stroke: #000;
+        stroke: #482173;
         shape-rendering: crispEdges;
     }
 
@@ -117,3 +117,8 @@ h2 {
     }
 
 /* CHART CHUNK #3: WORD CLOUD AND LOLLIPOP */
+
+.axis {
+    stroke:#482173;
+    stroke-width: 5;
+}

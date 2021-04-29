@@ -1,0 +1,54 @@
+[
+    {
+        "factor": "favorable",
+        "styles": [
+            {
+                "name": "conventional",
+                "value": 0.70
+            },
+            {
+                "name": "animated",
+                "value": 0.74
+            }
+        ]
+    },
+    {
+        "factor": "interesting",
+        "styles": [
+            {
+                "name": "conventional",
+                "value": 0.90
+            },
+            {
+                "name": "animated",
+                "value": 0.91
+            }
+        ]
+    },
+    {
+        "factor": "right amount of information",
+        "styles": [
+            {
+                "name": "conventional",
+                "value": 0.54
+            },
+            {
+                "name": "animated",
+                "value": 0.59
+            }
+        ]
+    },
+    {
+        "factor": "trust",
+        "styles": [
+            {
+                "name": "conventional",
+                "value": 0.79
+            },
+            {
+                "name": "animated",
+                "value": 0.80
+            }
+        ]
+    }
+]

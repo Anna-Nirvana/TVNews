@@ -1,175 +1,242 @@
-// Word cloud -- based on code from Jason Davies and Martin Braun
-// https://www.jasondavies.com/wordcloud/
-// https://jsbin.com/kiwojayoye/1/edit?html,js,output
-
-let kw_data_sorted;
-
 $(document).ready(function () {
 
+    //create namespaces for the overlapping charts
+    let lolly = {};
+    let wc = {};
+
+    //set up color function to apply to both charts
+    let color = d3.scaleSequential()
+        .domain([0, 50])
+        .interpolator(d3.interpolateViridis);
+
+    // store the sorted data, one version for each chart
+    const kw_data = [
+        { "shortText": "visual", "longText": "visual(s/ly/ize)", "size": 43 },
+        { "shortText": "easily", "longText": "easy/easily", "size": 41 },
+        { "shortText": "makes", "longText": "made/make(s)", "size": 39 },
+        { "shortText": "storytelling", "longText": "story/storytelling", "size": 38 },
+        { "shortText": "understand", "longText": "understand(ing/able)/comprehend)", "size": 35 },
+        { "shortText": "information", "longText": "information/informative", "size": 34 },
+        { "shortText": "animation", "longText": "animation/animated", "size": 30 },
+        { "shortText": "helpful", "longText": "help(ful/ing)/aid", "size": 26 },
+        { "shortText": "interesting", "longText": "interest(ed/ing)", "size": 22 },
+        { "shortText": "shows", "longText": "show(s)", "size": 17 },
+        { "shortText": "details", "longText": "detail(s/ed/ing)", "size": 16 },
+        { "shortText": "points", "longText": "point(s)", "size": 14 },
+        { "shortText": "numbers", "longText": "number(s)/data", "size": 13 },
+        { "shortText": "clear", "longText": "clear(er)", "size": 12 },
+        { "shortText": "follow", "longText": "follow", "size": 12 },
+        { "shortText": "great", "longText": "good/great", "size": 12 },
+        { "shortText": "news", "longText": "news", "size": 11 },
+        { "shortText": "(pay) attention", "longText": "(pay) attention", "size": 11 },
+        { "shortText": "comparison", "longText": "statistic(s)/comparison", "size": 9 },
+        { "shortText": "explain", "longText": "explain(ed/ing)/explanation(s)", "size": 9 },
+        { "shortText": "location", "longText": "map(s)/area/location", "size": 9 },
+        { "shortText": "giving", "longText": "give/giving", "size": 8 },
+        { "shortText": "appealing", "longText": "appealing", "size": 7 },
+        { "shortText": "happened", "longText": "happened", "size": 7 },
+        { "shortText": "relevant", "longText": "relevant", "size": 7 },
+        { "shortText": "feel", "longText": "feel", "size": 6 },
+        { "shortText": "memorable", "longText": "memorable/remember", "size": 6 },
+        { "shortText": "works", "longText": "work(s/ed)", "size": 6 },
+        { "shortText": "comprehensive", "longText": "full/entire/comprehensive", "size": 6 },
+        { "shortText": "people", "longText": "people", "size": 5 },
+        { "shortText": "time", "longText": "time", "size": 5 },
+        { "shortText": "engaging", "longText": "engag(ed/ing)", "size": 5 },
+        { "shortText": "graphs", "longText": "graph(s)", "size": 5 },
+        { "shortText": "impact", "longText": "impact(ful)", "size": 5 },
+        { "shortText": "important", "longText": "important", "size": 5 },
+        { "shortText": "picture", "longText": "picture/image(s)/depiction", "size": 5 },
+        { "shortText": "cool", "longText": "cool(er)", "size": 5 },
+        { "shortText": "compelling", "longText": "compelling", "size": 4 },
+        { "shortText": "hear", "longText": "hear(ing)", "size": 4 },
+        { "shortText": "simple", "longText": "simple", "size": 4 },
+        { "shortText": "subject", "longText": "subject/topic(s)", "size": 4 },
+        { "shortText": "provide", "longText": "provide(s/d)", "size": 4 },
+        { "shortText": "attractive", "longText": "attractive", "size": 4 },
+        { "shortText": "boring", "longText": "(less) boring", "size": 4 },
+        { "shortText": "broke", "longText": "broke (up the story)", "size": 3 },
+        { "shortText": "eye", "longText": "eye", "size": 3 },
+        { "shortText": "fact", "longText": "fact", "size": 3 },
+        { "shortText": "love", "longText": "love", "size": 3 },
+        { "shortText": "illustrate", "longText": "illustrate/illustration", "size": 3 },
+        { "shortText": "caught", "longText": "catch(ing)/caught", "size": 3 },
+    ];
+
+    // sort here if nec
+    // let kw_data_sorted = data.sort(function (b, a) {
+    //     return a.Value - b.Value;
+    //});
+
+    // console.log(kw_data_sorted);
+
+
     //LOLLIPOP CHART
-    // set up canvas by grabbing base SVG: svgL (L = lollipop) 
-    const marginL = { top: 0, right: 50, bottom: 50, left: 200 };
-    const svgL = d3.select('#lollipop');
-    const widthL = svgL.attr('width');
-    const heightL = svgL.attr('height');
-    const innerwidthL = widthL - marginL.left - marginL.right; //!innerwidthL is a length!
-    const innerheightL = heightL - marginL.top - marginL.bottom; //!innerheightL is a length!
 
-    //set up groups to append x and y axes
-    const g = svgL.append('g')
-        .attr('transform', `translate(${marginL.left},${marginL.top})`);
+    // set up canvas by grabbing base svg 
+    lolly.margin = { top: 0, right: 50, bottom: 50, left: 200 };
+    lolly.svg = d3.select('#lollipop');
+    lolly.width = lolly.svg.attr('width');
+    lolly.height = lolly.svg.attr('height');
+    lolly.innerWidth = lolly.width - lolly.margin.left - lolly.margin.right;
+    lolly.innerHeight = lolly.height - lolly.margin.top - lolly.margin.bottom;
 
-    const xAxisG = g.append('g')
-        .attr('transform', `translate(-200, ${innerheightL})`);
-    const yAxisG = g.append('g');
+    //set up group for the drawing
+    lolly.g = lolly.svg.append('g')
+    // .attr('transform', `translate(${lolly.margin.left},${lolly.margin.top})`);
 
-    // parse the keyword (kw) data
-    d3.csv('keywords.csv')
-        .then(function (kw_data) {
+    //Create an array for the domain
+    lolly.domainArrayLong = kw_data.map(function (d) { return d.longText; });
 
-            // sort keyword data and store it in a variable for the intctv bit
-            kw_data_sorted = kw_data.sort(function (b, a) {
-                return a.Value - b.Value;
-            });
+    // Define X and Y scales
+    lolly.xScale = d3.scaleLinear()
+        .domain([0, 50])
+        .range([lolly.margin.left, (lolly.width - lolly.margin.right)]);
 
-            console.log(kw_data_sorted);
+    lolly.yScale = yScale = d3.scaleBand()
+        .domain(lolly.domainArrayLong)
+        .range([lolly.margin.top, lolly.margin.top + lolly.innerHeight])
+        .padding(1);
 
-            // Add X axis scale
-            var xScale = d3.scaleLinear()
-                .domain([0, 50])
-                .range([marginL.left, marginL.left + innerwidthL]);
+    // Draw X axis, add labels
+    lolly.xAxis = lolly.svg.append('g')
+        .classed('axis', true)
+        .attr('transform', `translate(-0, ${lolly.height - lolly.margin.bottom})`)
+        .call(d3.axisBottom(lolly.xScale))
+        .selectAll('text', 'g')
+        .attr('classed', 'axis-label', true)
+        .attr('transform', 'translate(2,0)')
+        .style('text-anchor', 'center');
 
-            // Add Y axis scale
-            var yScale = d3.scaleBand()
-                .domain(kw_data_sorted.map(function (d) { return d.keyword; }))
-                .range([marginL.top, marginL.top + innerheightL])
-                .padding(1);
+    // Draw Y axis, add labels
+    lolly.yAxis = lolly.svg.append('g')
+        .classed('axis', true)
+        .attr("transform", `translate(${lolly.margin.left}, 0)`)
+        .call(d3.axisLeft(yScale))
+        .selectAll('text')
+        .attr('classed', 'axis-label', true)
+        // .attr('transform', 'translate(0,0)')
+        .style('text-anchor', 'end');
 
-            // Draw X axis, add labels
-            xAxisG.call(d3.axisBottom(xScale))
-                .selectAll('text', 'g')
-                .attr('classed', 'axis-label', true)
-                .attr('transform', 'translate(2,0)')
-                .style('text-anchor', 'center');
+    // axis.tickSize(0);
 
+    // Add lollipop lines
+    lolly.lines = lolly.svg.selectAll('lollyLine')
+        .data(kw_data)
+        .join('line')
+        // .attr("transform", `translate(-30, -30)`)
+        .attr("x1", lolly.margin.left)
+        .attr("x2", function (d) { return lolly.xScale(d.size); })
+        .attr("y1", function (d) { return yScale(d.longText); })
+        .attr("y2", function (d) { return yScale(d.longText); })
+        .attr("stroke", function (d, i) { return color(i); })
+        .attr('opacity', 0.2)
+        .attr('stroke-width', 40)
+        //INTCTV LINK
+        .on('mouseover', function (e, d) {
+            let itemL = d.longText;
+            let itemC = d.shortText;
 
-            // Draw Y axis, add labels
-            yAxisG
-                .call(d3.axisLeft(yScale))
-                .selectAll('text')
-                .attr('classed', 'axis-label', true)
-                // .attr('transform', 'translate(0,0)')
-                .style('text-anchor', 'end');
+            // lolly.lines.attr('opacity', 0.2);
+            lolly.pops.attr('opacity', 0.2);
+            hoverCloud.attr('opacity', 0.2);
 
-            // Lines
-            svgL.selectAll("myline")
-                .data(kw_data_sorted)
-                .join('line')
-                .attr("x1", function (d) { return xScale(+d.uses); })
-                .attr("x2", marginL.left)
-                .attr("y1", function (d) { return yScale(d.keyword); })
-                .attr("y2", function (d) { return yScale(d.keyword); })
-                .attr("stroke", "grey");
+            d3.select(this)
+                .attr('opacity', 1);
+                // .attr('stroke-width', 5);
 
-            // Circles
-            svgL.selectAll("#mycircle")
-                .data(kw_data_sorted)
-                .join("circle")
-                .attr("cx", function (d) { return xScale(+d.uses); })
-                .attr("cy", function (d) { return yScale(d.keyword); })
-                .attr("r", "6")
-                .style("fill", function (d, i) { return color(i); })
-                .attr("stroke", "black")
-                .classed('hover', true);
+            lolly.pops.filter(function (dd) {
+                return dd.longText === itemL;
+            }).attr('opacity', 1);
+
+            hoverCloud.filter(function (dd) {
+                return dd.shortText === itemC;
+            }).attr('opacity', 1);
+
+        })
+        .on('mouseout', function () {
+
+            hoverCloud.attr('opacity', 1);
+            lolly.pops.attr('opacity', 1);
+            lolly.lines.attr('opacity', 1);
+
+        });
+
+    // Add lollipop circles
+    lolly.pops = lolly.svg.selectAll("circle")
+        .data(kw_data)
+        .join("circle")
+        .attr("cx", function (d) { return lolly.xScale(d.size); })
+        .attr("cy", function (d) { return yScale(d.longText); })
+        .attr("r", "20")
+        .style("fill", function (d, i) { return color(i); })
+        .attr("stroke", "none")
+        .classed('hoverPops', true)
+        //INTCTV LINK
+        .on('mouseover', function (e, d) {
+            let item = d.shortText;
+
+            lolly.lines.attr('opacity', 0.2);
+            // lolly.pops.attr('opacity', 0.2);
+            hoverCloud.attr('opacity', 0.2);
+
+            lolly.lines.filter(function (dd) {
+                return dd.shortText === item;
+            })
+                .attr('opacity', 1);
+                // .attr('stroke-width', 5);
+
+            d3.select(this).attr('opacity', 1);
+
+            hoverCloud.filter(function (dd) {
+                return dd.shortText === item;
+            }).attr('opacity', 1);
+        })
+        .on('mouseout', function () {
+
+            lolly.lines
+                .attr('opacity', 0.2);
+                // .attr('stroke-width', 1);
+            lolly.pops.attr('opacity', 1);
+            hoverCloud.attr('opacity', 1);
 
         });
 
 
     //WORD CLOUD
 
-    var color = d3.scaleSequential()
-        .domain([0, 30])
-        .interpolator(d3.interpolateViridis);
+    //dimensions for the cloud; make sure to account for varying rotations of long edge words!
+    wc.width = lolly.width / 2;
+    wc.height = lolly.height / 2;
 
-    var words = [
-        // { "text": "graphic(s)", "size": 77 },
-        { "text": "visual", "size": 43 },
-        { "text": "easily", "size": 41 },
-        { "text": "makes", "size": 39 },
-        { "text": "storytelling", "size": 38 },
-        { "text": "understand", "size": 35 },
-        { "text": "information", "size": 34 },
-        { "text": "animation", "size": 30 },
-        { "text": "helpful", "size": 26 },
-        { "text": "interesting", "size": 22 },
-        { "text": "shows", "size": 17 },
-        { "text": "details", "size": 16 },
-        { "text": "points", "size": 14 },
-        { "text": "numbers", "size": 13 },
-        { "text": "clearer", "size": 34 },
-        { "text": "follow", "size": 12 },
-        { "text": "great", "size": 12 },
-        { "text": "news", "size": 11 },
-        { "text": "(pay) attention", "size": 11 },
-        { "text": "comparison", "size": 9 },
-        { "text": "explain", "size": 9 },
-        { "text": "location", "size": 9 },
-        { "text": "giving", "size": 8 },
-        { "text": "appealing", "size": 7 },
-        { "text": "happened", "size": 7 },
-        { "text": "relevant", "size": 7 },
-        { "text": "feel", "size": 6 },
-        { "text": "memorable", "size": 6 },
-        { "text": "works", "size": 6 },
-        { "text": "comprehensive", "size": 6 },
-        { "text": "people", "size": 5 },
-        { "text": "time", "size": 5 },
-        { "text": "engaging", "size": 5 },
-        { "text": "graphs", "size": 5 },
-        { "text": "impact", "size": 5 },
-        { "text": "important", "size": 5 },
-        { "text": "picture", "size": 5 },
-        { "text": "cool", "size": 5 },
-        { "text": "compelling", "size": 4 },
-        { "text": "hear", "size": 4 },
-        { "text": "simple", "size": 4 },
-        { "text": "subject/topic(s)", "size": 4 },
-        { "text": "provides", "size": 4 },
-        { "text": "attractive", "size": 4 },
-        { "text": "(less) boring", "size": 4 },
-        { "text": "broke up (the story)", "size": 3 },
-        { "text": "eye", "size": 3 },
-        { "text": "fact", "size": 3 },
-        { "text": "love", "size": 3 },
-        { "text": "illustrate", "size": 3 },
-        { "text": "caught", "size": 3 },
+    //filter down the data to just the short word versions and values
+    let kw_data_cloudFilt = kw_data.filter(function (d) {
+        return d.shortText, d.size;
+    })
 
+    //set up the layout
 
-        //etc.,
-    ];
-
-    widthC = widthL / 1.5;
-    heightC = heightL / 2;
-
-    var vis = document.getElementById("cloud");
-    var layout = d3.layout.cloud().size([widthC, heightC])
-        .words(words)
+    wc.layout = d3.layout.cloud()
+        .size([wc.width, wc.height])
+        .words(kw_data_cloudFilt)
         .padding(2)
         .rotate(function () { return (~~(Math.random() * 6) - 2) * 20; })
         .font("Open Sans")
         .fontSize(function (d) { return d.size + 10; })
         .spiral("archimedean")
+        //call draw function
         .on("end", draw);
 
-    layout.start();
+    wc.layout.start();
 
-    function draw(words) {
+    //Draw function
+    function draw(data) {
         d3.select("#lollipop")
             .append("g")
-            .attr("transform", "translate(" + (widthC) + "," + (heightC) + ")")
+            .attr("transform", "translate(" + (wc.width + lolly.xScale(0)) + "," + (wc.height) + ")")
             .attr('z-index', '2')
             .selectAll("text")
-            .data(words)
+            .data(kw_data)
             .join("text")
             .style("font-size", function (d) { return d.size + "px"; })
             .style("font-family", "Open Sans")
@@ -179,57 +246,44 @@ $(document).ready(function () {
                 return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
             })
             .classed('cloud', true)
-            .text(function (d) { return d.text; })
-            // .on('mouseover', function(d) {
-            //     highlightLolly(this._selection);
-            // })
-            ;
-    }
+            .classed('hoverCloud', true)
+            .text(function (d) { return d.shortText; })
 
-    // create a 'tooltip' / highlight state
-    var tooltip = d3.selectAll('.hover')
-        .append('circle')
-        .style("opacity", 1);
+    }; //draw fn
 
+    //grab cloud elements for the hover intxn
+    hoverCloud = d3.selectAll('.hoverCloud');
 
+    hoverCloud
+        .on('mouseover', function (e, d) {
+            let item = d.longText;
 
+            lolly.lines.attr('opacity', 0.2);
+            lolly.pops.attr('opacity', 0.2);
+            hoverCloud.attr('opacity', 0.2);
 
-    var lollipopWrapper = g.selectAll(".lollipopWrapper")
-        .data(kw_data_sorted)
-        .join('g')
-        .attr('class', 'lollipopWrapper')
+            lolly.lines.filter(function (dd) {
+                return dd.longText === item;
+            })
+                // .attr('stroke-width', 5)
+                .attr('opacity', 1);
 
-    lollipopWrapper.selectAll('lollipopGlow')
-        .data(function (d, i) { return i; })
-        .join('line')
-        .attr('class', 'lollipopGlow')
-        .attr('r', 10)
-        .attr("cx", mycircle.cx)
-        .attr("cy", mycircle.cy)
-        .style('fill', '#00ff00')
-        .style('opacity', '0')
-        .on('mouseover', function (d, i) {
+            lolly.pops.filter(function (dd) {
+                return dd.longText === item;
+            }).attr('opacity', 1);
 
-            tooltip
-                .transition()
-                .duration(200)
-                .style('opacity', '1');
+            d3.select(this)
+                .attr('opacity', 1);
 
-                console.log(d.Value);
-        }
-            .on("mouseout", function () {
-                tooltip.transition().duration(200)
-                    .style("opacity", 0);
-            }));
+        })
+        .on('mouseout', function () {
 
+            lolly.lines
+                // .attr('stroke-width', 1)
+                .attr('opacity', 0.2)
+            lolly.pops.attr('opacity', 1);
+            hoverCloud.attr('opacity', 1);
 
-}); //on documentReady
+        });
 
-
-// function highlightLolly(item, i) {
-
-//     console.log(i);
-
-//     }
-
-
+});//on documentReady

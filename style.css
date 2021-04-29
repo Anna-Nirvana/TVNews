@@ -119,6 +119,6 @@ h2 {
 /* CHART CHUNK #3: WORD CLOUD AND LOLLIPOP */
 
 .axis {
-    stroke:#482173;
-    stroke-width: 5;
+    /* stroke:#482173;
+    stroke-width: 5; */
 }

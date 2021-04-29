@@ -74,7 +74,7 @@ $(document).ready(function () {
     //LOLLIPOP CHART
 
     // set up canvas by grabbing base svg 
-    lolly.margin = { top: 0, right: 50, bottom: 50, left: 200 };
+    lolly.margin = { top: 20, right: 50, bottom: 50, left: 200 };
     lolly.svg = d3.select('#lollipop');
     lolly.width = lolly.svg.attr('width');
     lolly.height = lolly.svg.attr('height');
@@ -102,11 +102,14 @@ $(document).ready(function () {
     lolly.xAxis = lolly.svg.append('g')
         .classed('axis', true)
         .attr('transform', `translate(-0, ${lolly.height - lolly.margin.bottom})`)
-        .call(d3.axisBottom(lolly.xScale))
+        .call(d3.axisBottom(lolly.xScale)
+            //remove x axis tick marks
+            .tickSize(['0,0']))
         .selectAll('text', 'g')
-        .attr('classed', 'axis-label', true)
-        .attr('transform', 'translate(2,0)')
-        .style('text-anchor', 'center');
+            .attr('classed', 'axis-label', true)
+            .attr('font-family', 'Open Sans')
+            .attr("transform", "translate(0,10)")
+            .style('text-anchor', 'center');
 
     // Draw Y axis, add labels
     lolly.yAxis = lolly.svg.append('g')
@@ -114,7 +117,7 @@ $(document).ready(function () {
         .attr("transform", `translate(${lolly.margin.left}, 0)`)
         .call(d3.axisLeft(yScale)
             //remove y axis tick marks
-            .tickSize([0,0]))
+            .tickSize(['0,0']))
         .attr("x", 4)
         .attr("dy", -4)
         .selectAll('text')
@@ -122,7 +125,6 @@ $(document).ready(function () {
             .attr('font-family', 'Open Sans')
             .attr("transform", "translate(-10,0)rotate(-20)")
             .attr('classed', 'axis-label', true)
-        // .attr('transform', 'translate(0,0)')
             .style('text-anchor', 'end');
 
     // axis.tickSize(0);
@@ -134,8 +136,8 @@ $(document).ready(function () {
         // .attr("transform", `translate(-30, -30)`)
         .attr("x1", lolly.margin.left)
         .attr("x2", function (d) { return lolly.xScale(d.size); })
-        .attr("y1", function (d) { return yScale(d.longText); })
-        .attr("y2", function (d) { return yScale(d.longText); })
+        .attr("y1", function (d) { return lolly.yScale(d.longText); })
+        .attr("y2", function (d) { return lolly.yScale(d.longText); })
         .attr("stroke", function (d, i) { return color(i); })
         .attr('opacity', 0.2)
         .attr('stroke-width', 40)
@@ -173,7 +175,7 @@ $(document).ready(function () {
         .data(kw_data)
         .join("circle")
         .attr("cx", function (d) { return lolly.xScale(d.size); })
-        .attr("cy", function (d) { return yScale(d.longText); })
+        .attr("cy", function (d) { return lolly.yScale(d.longText); })
         .attr("r", "20")
         .style("fill", function (d, i) { return color(i); })
         .attr("stroke", "none")

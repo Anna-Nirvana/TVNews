@@ -89,55 +89,53 @@ $(document).ready(function () {
     lolly.domainArrayLong = kw_data.map(function (d) { return d.longText; });
 
     // Define X and Y scales
-    lolly.xScale = d3.scaleLinear()
-        .domain([0, 50])
-        .range([lolly.margin.left, (lolly.width - lolly.margin.right)]);
-
-    lolly.yScale = yScale = d3.scaleBand()
+    lolly.xScale = d3.scaleBand()
         .domain(lolly.domainArrayLong)
-        .range([lolly.margin.top, lolly.margin.top + lolly.innerHeight])
+        .range([lolly.margin.left, (lolly.margin.left + lolly.innerWidth)])
         .padding(1);
+
+    lolly.yScale = d3.scaleLinear()
+        .domain([0, 50])
+        .range([(lolly.height - lolly.margin.bottom), (lolly.margin.top)]);
 
     // Draw X axis, add labels
     lolly.xAxis = lolly.svg.append('g')
         .classed('axis', true)
-        .attr('transform', `translate(-0, ${lolly.height - lolly.margin.bottom})`)
+        // .attr('transform', `translate(-0, ${lolly.height - lolly.margin.bottom})`)
         .call(d3.axisBottom(lolly.xScale)
             //remove x axis tick marks
-            .tickSize([0,0]))
-        .selectAll('text', 'g')
-            .attr('classed', 'axis-label', true)
+                .tickSize([0,0]))
+            .selectAll('text')
+            // .attr('y', -10)
             .attr('font-family', 'Open Sans')
-            .attr("transform", "translate(0,10)")
-            .style('text-anchor', 'center');
+            .attr("transform", "translate(0, 10)rotate(-20)")
+            .attr('classed', 'axis-label', true)
+            .style('text-anchor', 'end');
 
     // Draw Y axis, add labels
     lolly.yAxis = lolly.svg.append('g')
         .classed('axis', true)
         .attr("transform", `translate(${lolly.margin.left}, 0)`)
-        .call(d3.axisLeft(yScale)
+        .call(d3.axisLeft(lolly.yScale)
             //remove y axis tick marks
             .tickSize([0,0]))
-        .attr("x", 4)
-        .attr("dy", -4)
-        .selectAll('text')
-            .attr('x', -10)
-            .attr('font-family', 'Open Sans')
-            .attr("transform", "translate(-10,0)rotate(-20)")
+        .attr("y", 4)
+        .attr("dx", -4)
+        .selectAll('text', 'g')
             .attr('classed', 'axis-label', true)
-            .style('text-anchor', 'end');
-
-    // axis.tickSize(0);
+            .attr('font-family', 'Open Sans')
+            .attr("transform", "translate(-10,0)")
+            .style('text-anchor', 'center');
 
     // Add lollipop lines
     lolly.lines = lolly.svg.selectAll('lollyLine')
         .data(kw_data)
         .join('line')
         // .attr("transform", `translate(-30, -30)`)
-        .attr("x1", lolly.margin.left)
-        .attr("x2", function (d) { return lolly.xScale(d.size); })
-        .attr("y1", function (d) { return yScale(d.longText); })
-        .attr("y2", function (d) { return yScale(d.longText); })
+        .attr("x1", function (d) { return lolly.xScale(d.longText); })
+        .attr("x2", function (d) { return lolly.xScale(d.longText); })
+        .attr("y1", lolly.margin.bottom)
+        .attr("y2", function (d) { return lolly.yScale(d.size); })
         .attr("stroke", function (d, i) { return color(i); })
         .attr('opacity', 0.2)
         .attr('stroke-width', 40)
@@ -174,8 +172,8 @@ $(document).ready(function () {
     lolly.pops = lolly.svg.selectAll("circle")
         .data(kw_data)
         .join("circle")
-        .attr("cx", function (d) { return lolly.xScale(d.size); })
-        .attr("cy", function (d) { return yScale(d.longText); })
+        .attr("cy", function (d) { return lolly.xScale(d.size); })
+        .attr("cx", function (d) { return lolly.yScale(d.longText); })
         .attr("r", "20")
         .style("fill", function (d, i) { return color(i); })
         .attr("stroke", "none")
@@ -241,7 +239,7 @@ $(document).ready(function () {
     function draw(data) {
         d3.select("#lollipop")
             .append("g")
-            .attr("transform", "translate(" + (lolly.xScale(30)) + "," + (wc.height) + ")")
+            .attr("transform", "translate(" + (lolly.yScale(30)) + "," + (wc.height) + ")")
             .attr('z-index', '2')
             .selectAll("text")
             .data(kw_data)

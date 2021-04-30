@@ -1,4 +1,6 @@
-$(document).ready(function () {
+// $(document).ready(function () {
+
+function DrawLolly() {
 
     //create namespaces for the overlapping charts
     let lolly = {};
@@ -75,9 +77,9 @@ $(document).ready(function () {
 
     // set up canvas by grabbing base svg 
     lolly.margin = { top: 20, right: 50, bottom: 50, left: 200 };
-    lolly.svg = d3.select('#lollipop');
-    lolly.width = lolly.svg.attr('width');
-    lolly.height = lolly.svg.attr('height');
+    lolly.svg = d3.select('.lollipop');
+    lolly.width = 1000;
+    lolly.height = 800;
     lolly.innerWidth = lolly.width - lolly.margin.left - lolly.margin.right;
     lolly.innerHeight = lolly.height - lolly.margin.top - lolly.margin.bottom;
 
@@ -104,7 +106,8 @@ $(document).ready(function () {
         .attr('transform', `translate(-0, ${lolly.height - lolly.margin.bottom})`)
         .call(d3.axisBottom(lolly.xScale)
             //remove x axis tick marks
-            .tickSize(['0,0']))
+            .tickSize(0)
+            )
         .selectAll('text', 'g')
             .attr('classed', 'axis-label', true)
             .attr('font-family', 'Open Sans')
@@ -117,7 +120,8 @@ $(document).ready(function () {
         .attr("transform", `translate(${lolly.margin.left}, 0)`)
         .call(d3.axisLeft(yScale)
             //remove y axis tick marks
-            .tickSize(['0,0']))
+            .tickSize(0)
+            )
         .attr("x", 4)
         .attr("dy", -4)
         .selectAll('text')
@@ -293,5 +297,6 @@ $(document).ready(function () {
             hoverCloud.attr('opacity', 1);
 
         });
+    } //drawLolly() fn end
 
-});//on documentReady
+// });//on documentReady

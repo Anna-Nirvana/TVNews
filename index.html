@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-    <title>Animation in TV News</title>
+    <title>Exploring the Role of Animation in TV News</title>
 
     <!-- Google fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel='stylesheet' type='text/css'>
@@ -12,11 +12,12 @@
 
     <!-- D3.js V6 and jQuery -->
     <script src="https://d3js.org/d3.v6.min.js"> </script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
 
     <!-- Separate script files for the charts -->
     <script src='spiderplot_v6.js'></script>
     <script src='RadialBarFn.js'> </script>
+    <script src='lollipop_cloud_2.js'></script>
 
     <!-- Reference algo for the word cloud -->
     <script src="https://rawgit.com/jasondavies/d3-cloud/master/build/d3.layout.cloud.js"></script>
@@ -106,16 +107,6 @@
                     //     return selectedColor;
                     // }
 
-                    // color = d3.scaleLinear()
-                    //     .domain([1,4])
-                    //     .interpolate(d3.interpolateHcl)
-                    //     .range(['#007AFF', '#FFF500']);
-
-                    //color =
-                    //     d3.scaleOrdinal()
-                    //     .domain(data)
-                    //     .range(d3.schemePaired);
-
                     var radarChartOptions = {
                         w: width,
                         h: height,
@@ -127,10 +118,8 @@
 
                     //Call function 
                     RadarChart(".radarChartF", dataM, radarChartOptions);
-
-                    RadarChart(".radarChartM", dataM, radarChartOptions);
-
-                    RadarChart(".radarChartY", dataM, radarChartOptions);
+                    RadarChart(".radarChartM", dataF, radarChartOptions);
+                    RadarChart(".radarChartY", dataY, radarChartOptions);
 
                 });
 
@@ -236,24 +225,16 @@
 
         <div id='lollipop_cloud' class='viz'>
 
-            <div id="lollipop">
-                <h3> Use of keywords </h3>
-                <svg id="lollyChart" width='800' height='800'> </svg>
-                <script src="keywords_lollipop.js"></script>
+            <h3> Use of keywords </h3>
+            <div id="lollipop_chart">
+                <svg id="lollipop" class='lollipop' width='1000' height='800'> </svg>
+                <script> 
+    DrawLolly(); </script>
+                <div id="cloud"> </div>
 
-                <div id="cloud">
-                    <h3> Keywords </h3>
                 </div>
 
-                <!-- SCRIPT REF TO BUILD THE LOLLIPOP -->
-                <script></script>
-
-                <!-- SCRIPT REF TO BUILD THE WORD CLOUD -->
-                <script src='script_wordCloud.js'></script>
-
-                <!-- ^these might have to be in the same file to enable intxn -->
-
-                <p> RADAR_SPIDER analysis para. analysis para. analysis para. analysis para. analysis para. analysis
+                <p> LOLLIPOP_CLOUD analysis para. analysis para. analysis para. analysis para. analysis para. analysis
                     para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para.
                     analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis
                     para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para.

@@ -6,8 +6,7 @@ function RadialBar(id, data, options) {
         margin: 40, //the radial margin
         levels: 5, //no. of radial levels to display with axis ticks
         maxValue: 1, //maximum value to be displayed
-        color: d3.scaleOrdinal()
-            .range(['#e5f5d3', '#89f70a']), //array or scheme of colors to be used
+        color: 0, //array or scheme of colors to be used
         formatNumber: d3.format('.0%') //use d3-format to specify how the data will be displayed
     
     
@@ -91,6 +90,7 @@ function RadialBar(id, data, options) {
                 .join('path')
                 .each(function (d) { d.outerRadius = 0; })
                 .style('fill', function (d) { return config.color(d.name); })
+                .style('opacity', 0.8)
                 .attr('d', arc)
                 // .classed('anim', true);
 

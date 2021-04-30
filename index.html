@@ -22,7 +22,8 @@
     <!-- Reference algo for the word cloud -->
     <script src="https://rawgit.com/jasondavies/d3-cloud/master/build/d3.layout.cloud.js"></script>
 
-    <link rel="stylesheet" href="style.css"></link>
+    <link rel="stylesheet" href="style.css">
+    </link>
 </head>
 
 <body>
@@ -70,15 +71,15 @@
                     //rearrange arrays to display layers & be accessed by RadarChart fn:
 
                     //female demo
-                    let dataF = [];
-                    dataF.push(data[0].Female.lateTeens_earlyTwenties);
-                    dataF.push(data[0].Female.lateTwenties_earlyThirties);
-                    dataF.push(data[0].Female.lateThirties_earlyForties);
-                    dataF.push(data[0].Female.lateForties_earlyFifties);
+                    data.F = [];
+                    data.F.push(data[0].Female.lateTeens_earlyTwenties);
+                    data.F.push(data[0].Female.lateTwenties_earlyThirties);
+                    data.F.push(data[0].Female.lateThirties_earlyForties);
+                    data.F.push(data[0].Female.lateForties_earlyFifties);
 
                     //male demo
-                    let dataM = [];
-                    dataM.push(
+                    data.M = [];
+                    data.M.push(
                         data[0].Male.lateTeens_earlyTwenties,
                         data[0].Male.lateTwenties_earlyThirties,
                         data[0].Male.lateThirties_earlyForties,
@@ -86,8 +87,8 @@
                     );
 
                     //youth demos incl. female/male
-                    let dataY = []
-                    dataY.push(
+                    data.Y = []
+                    data.Y.push(
                         data[0].Female.lateTeens_earlyTwenties,
                         data[0].Female.lateTwenties_earlyThirties,
                         data[0].Male.lateTeens_earlyTwenties,
@@ -97,15 +98,10 @@
 
                     //Draw
 
-                    color =
-                        // function(j) {
-                        //     let selectedColor =
-                        d3.scaleLinear()
-                            .domain([1, 4])
-                            .interpolate(d3.interpolateHcl)
-                            .range(['#007AFF', '#FFF500']);
-                    //     return selectedColor;
-                    // }
+                    colorSchemeRadar =
+                        d3.scaleOrdinal()
+                            .domain([data])
+                            .range(['#482173', '#2e6f8e', '#29af7f', '#bddf26']);
 
                     var radarChartOptions = {
                         w: width,
@@ -113,13 +109,13 @@
                         margin: margin,
                         maxValue: 0.95,
                         levels: 5,
-                        color: color
+                        color: colorSchemeRadar
                     };
 
                     //Call function 
-                    RadarChart(".radarChartF", dataM, radarChartOptions);
-                    RadarChart(".radarChartM", dataF, radarChartOptions);
-                    RadarChart(".radarChartY", dataY, radarChartOptions);
+                    RadarChart(".radarChartF", data.M, radarChartOptions);
+                    RadarChart(".radarChartM", data.F, radarChartOptions);
+                    RadarChart(".radarChartY", data.Y, radarChartOptions);
 
                 });
 
@@ -131,6 +127,8 @@
                 <div id="three">Age 35-44</div>
                 <div id="four">Age 45-54</div>
             </div> -->
+
+            <div id = 'radarInfoBox'> </div>
 
             <p> RADAR_SPIDER analysis para. analysis para. analysis para. analysis para. analysis para. analysis para.
                 analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para.
@@ -151,14 +149,19 @@
 
             <!-- SCRIPT REF TO BUILD THE RADIAL BAR -->
             <script>
+
+                //set color variable/fn for both charts
+                colorSchemeRB =
+                d3.scaleOrdinal()
+                    .range(['#2e6f8e', '#29af7f']);
+
+
                 //load data and do any rearranging nec
-                d3.json('./factors_perVid.json', function (d) {
+                d3.json('factors_perVid.json', function (d) {
                     return d;
                 }).then(function (dataRB_perVid) {
 
-                    //set color variable/fn
-                    var color = d3.scaleOrdinal()
-                        .range(['#e5f5d3', '#89f70a']);
+
 
                     //set any other options needed
                     var radialBarOptions = {
@@ -167,7 +170,7 @@
                         margin: 40,
                         maxValue: 1,
                         levels: 5,
-                        color: color
+                        color: colorSchemeRB
                     };
 
                     //Call function 
@@ -178,9 +181,7 @@
                     return d;
                 }).then(function (dataRB_avg) {
 
-                    //set color variable/fn
-                    var color = d3.scaleOrdinal()
-                        .range(['#e5f5d3', '#89f70a']);
+
 
                     //set any other options needed
                     var radialBarOptions = {
@@ -189,17 +190,16 @@
                         margin: 40,
                         maxValue: 1,
                         levels: 5,
-                        color: color
+                        color: colorSchemeRB
                     };
 
-                    
 
                     //Call function 
                     RadialBar("#radialBar2", dataRB_avg, radialBarOptions);
                 });
             </script>
 
-                        <div id="radialBar1" class="radialBar1">
+            <div id="radialBar1" class="radialBar1">
                 <h3> Animation - per vid </h3>
             </div>
             <div id="radialBar2" class="radialBar2">
@@ -228,18 +228,86 @@
             <h3> Use of keywords </h3>
             <div id="lollipop_chart">
                 <svg id="lollipop" class='lollipop' width='1000' height='800'> </svg>
-                <script> 
-    DrawLolly(); </script>
+                <script>
+
+                    // load and parse the sorted data, one version for each chart
+                    const kw_data = [
+                        { "shortText": "visual", "longText": "visual(s/ly/ize)", "size": 43 },
+                        { "shortText": "easily", "longText": "easy/easily", "size": 41 },
+                        { "shortText": "makes", "longText": "made/make(s)", "size": 39 },
+                        { "shortText": "storytelling", "longText": "story/storytelling", "size": 38 },
+                        { "shortText": "understand", "longText": "understand(ing/able)/comprehend)", "size": 35 },
+                        { "shortText": "information", "longText": "information/informative", "size": 34 },
+                        { "shortText": "animation", "longText": "animation/animated", "size": 30 },
+                        { "shortText": "helpful", "longText": "help(ful/ing)/aid", "size": 26 },
+                        { "shortText": "interesting", "longText": "interest(ed/ing)", "size": 22 },
+                        { "shortText": "shows", "longText": "show(s)", "size": 17 },
+                        { "shortText": "details", "longText": "detail(s/ed/ing)", "size": 16 },
+                        { "shortText": "points", "longText": "point(s)", "size": 14 },
+                        { "shortText": "numbers", "longText": "number(s)/data", "size": 13 },
+                        { "shortText": "clear", "longText": "clear(er)", "size": 12 },
+                        { "shortText": "follow", "longText": "follow", "size": 12 },
+                        { "shortText": "great", "longText": "good/great", "size": 12 },
+                        { "shortText": "news", "longText": "news", "size": 11 },
+                        { "shortText": "(pay) attention", "longText": "(pay) attention", "size": 11 },
+                        { "shortText": "comparison", "longText": "statistic(s)/comparison", "size": 9 },
+                        { "shortText": "explain", "longText": "explain(ed/ing)/explanation(s)", "size": 9 },
+                        { "shortText": "location", "longText": "map(s)/area/location", "size": 9 },
+                        { "shortText": "giving", "longText": "give/giving", "size": 8 },
+                        { "shortText": "appealing", "longText": "appealing", "size": 7 },
+                        { "shortText": "happened", "longText": "happened", "size": 7 },
+                        { "shortText": "relevant", "longText": "relevant", "size": 7 },
+                        { "shortText": "feel", "longText": "feel", "size": 6 },
+                        { "shortText": "memorable", "longText": "memorable/remember", "size": 6 },
+                        { "shortText": "works", "longText": "work(s/ed)", "size": 6 },
+                        { "shortText": "comprehensive", "longText": "full/entire/comprehensive", "size": 6 },
+                        { "shortText": "people", "longText": "people", "size": 5 },
+                        { "shortText": "time", "longText": "time", "size": 5 },
+                        { "shortText": "engaging", "longText": "engag(ed/ing)", "size": 5 },
+                        { "shortText": "graphs", "longText": "graph(s)", "size": 5 },
+                        { "shortText": "impact", "longText": "impact(ful)", "size": 5 },
+                        { "shortText": "important", "longText": "important", "size": 5 },
+                        { "shortText": "picture", "longText": "picture/image(s)/depiction", "size": 5 },
+                        { "shortText": "cool", "longText": "cool(er)", "size": 5 },
+                        { "shortText": "compelling", "longText": "compelling", "size": 4 },
+                        { "shortText": "hear", "longText": "hear(ing)", "size": 4 },
+                        { "shortText": "simple", "longText": "simple", "size": 4 },
+                        { "shortText": "subject", "longText": "subject/topic(s)", "size": 4 },
+                        { "shortText": "provide", "longText": "provide(s/d)", "size": 4 },
+                        { "shortText": "attractive", "longText": "attractive", "size": 4 },
+                        { "shortText": "boring", "longText": "(less) boring", "size": 4 },
+                        { "shortText": "broke", "longText": "broke (up the story)", "size": 3 },
+                        { "shortText": "eye", "longText": "eye", "size": 3 },
+                        { "shortText": "fact", "longText": "fact", "size": 3 },
+                        { "shortText": "love", "longText": "love", "size": 3 },
+                        { "shortText": "illustrate", "longText": "illustrate/illustration", "size": 3 },
+                        { "shortText": "caught", "longText": "catch(ing)/caught", "size": 3 }
+                    ]
+
+                    let colorSchemeLolly = d3.scaleSequential()
+                        .domain([0, 50])
+                        .interpolator(d3.interpolateViridis);
+
+                    let lollyCloudOptions = {
+                        lollyWidth: 1000,
+                        lollyHeight: 800,
+                        lollyMargin: { top: 10, right: 0, bottom: 50, left: 150 },
+                        color: colorSchemeLolly
+                    };
+
+                    DrawLolly('#lollipop', kw_data, lollyCloudOptions);
+
+                </script>
                 <div id="cloud"> </div>
 
-                </div>
-
-                <p> LOLLIPOP_CLOUD analysis para. analysis para. analysis para. analysis para. analysis para. analysis
-                    para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para.
-                    analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis
-                    para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para.
-                    analysis para. analysis para. </p>
             </div>
+
+            <p> LOLLIPOP_CLOUD analysis para. analysis para. analysis para. analysis para. analysis para. analysis
+                para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para.
+                analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis
+                para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para.
+                analysis para. analysis para. </p>
+        </div>
     </section>
 
     <section id='conclusion' class='pageBones'>

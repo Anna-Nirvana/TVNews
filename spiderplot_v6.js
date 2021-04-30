@@ -1,50 +1,49 @@
 
 function RadarChart(id, data, options) {
 	var config = {
-		w: 400,				//Width of the circle
-		h: 400,				//Height of the circle
-		margin: {top: 10, right: 10, bottom: 10, left: 10}, //The margins of the SVG
-		levels: 3,				//How many levels or inner circles should there be drawn
-		maxValue: 1, 			//What is the value that the biggest circle will represent
-		labelFactor: 1.25, 	//How much farther than the radius of the outer circle should the labels be placed
-		wrapWidth: 60, 		//The number of pixels after which a label needs to be given a new line
-		opacityArea: 0.35, 	//The opacity of the area of the blob
-		dotRadius: 4, 			//The size of the colored circles of each blog
-		opacityCircles: 0.1, 	//The opacity of the circles of each blob
-		strokeWidth: 2, 		//The width of the stroke around each blob
-		color:	0
-		
-		//["#0d0887","#4b03a1","#c23c81","#dc5d67","#e66c5c"]	
-		//Color function
+		w: 400,				//dimensions for the circle
+		h: 400,
+		margin: {top: 10, right: 10, bottom: 10, left: 10}, //margins for the chart SVG
+		levels: 3,				//no. layers of the onion
+		maxValue: 1, 			//value the largest circle reps
+		labelFactor: 1.25, 	//dist. between outermost circle and  labels
+		wrapWidth: 80, 		//where carriage return occurs in a label (also applied in the)
+		opacityArea: 0.35, 	//blob area opacity
+		dotRadius: 4, 			//radius of the data points
+		opacityCircles: 0.1, 	//bg circles bold/faint
+		strokeWidth: 5, 		//how fat is the blob outline
+		color:	0		//placeholder for a color function
 	};
 	
-	//Put all of the options into a variable called config
+    //store options in the config variable above
 	if('undefined' !== typeof options){
         for(var i in options){
             if('undefined' !== typeof options[i]){ config[i] = options[i]; }
 	}//for i
 	}//if
-	
-	//If the supplied config.maxValue is smaller than the actual one, replace by the max in the data
-	//var config.maxValue = Math.max(config.maxValue, d3.max(data, function(i){return d3.max(i.map(function(o){return o.value;}))}));
-		
+
+
+	//Grab the variable names and set them up as axes (replace 'axis' with whatever variable in your data should act as the set of radial axes for the chart)
+
 	var allAxis = (data[0].map(function(i, j){return i.axis})),	//Names of each axis
-		total = allAxis.length,					//The number of different axes
-		radius = Math.min(config.w/2, config.h/2), 	//Radius of the outermost circle
-		Format = d3.format('.0%'),			 	//Percentage formatting
-		angleSlice = Math.PI * 2 / total;		//The width in radians of each "slice"
+		total = allAxis.length,					//number of axes
+		radius = Math.min(config.w/2, config.h/2), 	//biggest circle radius
+		Format = d3.format('.0%'),			 	//number format
+		angleSlice = Math.PI * 2 / total;		//how many radians wide is each slice
 	
 	//Scale for the radius
 	var rScale = d3.scaleLinear()
 		.range([0., radius])
 		.domain([0, config.maxValue]);
 		
+
+		console.log(data);
+
 	/////////////////////////////////////////////////////////
 	//////////// Create the container SVG and g /////////////
 	/////////////////////////////////////////////////////////
 
 	//Remove whatever chart with the same id/class was present before
-	//USE THIS WHEN COMBINING SVG ELEMENTS INTO A SINGLE WEBPAGE!
 	d3.select(id).select("svg").remove();
 	
 	//Initiate the radar chart SVG
@@ -53,7 +52,7 @@ function RadarChart(id, data, options) {
 			.attr("height", config.h + config.margin.top + config.margin.bottom)
 			.attr("class", "radar"+id);
 	//Append a g element		
-	var g = svg.append("g")
+	var g = svg.append("g") //general graphic group 
 			.attr("transform", "translate(" + (config.w/2 + config.margin.left) + "," + (config.h/2 + config.margin.top) + ")");
 	
 	/////////////////////////////////////////////////////////
@@ -72,7 +71,7 @@ function RadarChart(id, data, options) {
 	/////////////////////////////////////////////////////////
 	
 	//Wrapper for the grid & axes
-	var axisGrid = g.append("g").attr("class", "axisWrapper");
+	var axisGrid = g.append("g").attr("class", "axisWrapper"); //grid group
 	
 	//Draw the background circles
 	axisGrid.selectAll(".levels")
@@ -104,7 +103,7 @@ function RadarChart(id, data, options) {
 	//Create the straight lines radiating outward from the center
 	var axis = axisGrid.selectAll(".axis")
 		.data(allAxis)
-		.join("g")
+		.join("g") //radial axis group
 		.attr("class", "axis");
 	//Append the lines
 	axis.append("line")
@@ -141,12 +140,13 @@ function RadarChart(id, data, options) {
 	//Create a wrapper for the blobs	
 	var blobWrapper = g.selectAll(".radarWrapper")
 		.data(data)
-		.enter().append("g")
-		.attr("class", "radarWrapper");
+		.join("g") //group for all blobs
+		.attr("class", "radarWrapper")
+		;
 			
 	//Append the backgrounds	
 	blobWrapper
-		.append("path")
+		.append("line")
 		.attr("class", "radarArea")
 		.attr("d", function(d,i) { return radarLine(d); })
 		.style("fill", function(d,i) { return config.color(i); })
@@ -158,26 +158,26 @@ function RadarChart(id, data, options) {
 				.duration(200)
 				.style("fill-opacity", 0.01);
 			//as well as their dots
-			d3.selectAll(".radarCircle")
-				.transition()
-				.duration(200)
-				.style("fill-opacity", 0.01); 
+			// d3.selectAll(".radarCircle")
+			// 	.transition()
+			// 	.duration(100)
+			// 	.style("fill-opacity", 0.2); 
 			//Bring back the hovered over blob
 			d3.select(this)
 				.transition()
-				.duration(200)
+				.duration(100)
 				.style("fill-opacity", 0.7);
 			//and its dots??
-			d3.select(this.RadarCircle)
-				.transition()
-				.duration(200)
-				.style("fill-opacity", 0.7);
+			// d3.select(this.RadarCircle)
+			// 	.transition()
+			// 	.duration(100)
+			// 	.style("fill-opacity", 1);
 		})
 		.on('mouseout', function(){
 			//Bring back all blobs
 			d3.selectAll(".radarArea")
 				.transition()
-				.duration(200)
+				.duration(100)
 				.style("fill-opacity", config.opacityArea);
 		});
 		
@@ -190,16 +190,16 @@ function RadarChart(id, data, options) {
 		.style("fill", "none")
 		.style("filter" , "url(#glow)");		
 	
-	//Append the dots
-	// blobWrapper.selectAll(".radarCircle")
-	// 	.data(function(d,i) { return d; })
-	// 	.join("circle")
-	// 	.attr("class", "radarCircle")
-	// 	.attr("r", config.dotRadius)
-	// 	.attr("cx", function(d,i){ return rScale(d.value) * Math.cos(angleSlice*i - Math.PI/2); })
-	// 	.attr("cy", function(d,i){ return rScale(d.value) * Math.sin(angleSlice*i - Math.PI/2); })
-	// 	.style("fill", function(d,i,j) { return config.color(j); })
-	// 	.style("fill-opacity", 0.7);
+	// Append the dots
+	blobWrapper.selectAll(".radarCircle")
+		.data(function(d,i) { return d; })
+		.join("circle")
+		.attr("class", "radarCircle")
+		.attr("r", config.dotRadius)
+		.attr("cx", function(d,i){ return rScale(d.value) * Math.cos(angleSlice*i - Math.PI/2); })
+		.attr("cy", function(d,i){ return rScale(d.value) * Math.sin(angleSlice*i - Math.PI/2); })
+		.style("fill", 'white')
+		.style("fill-opacity", 0.7);
 
 	/////////////////////////////////////////////////////////
 	//////// Append invisible circles for tooltip ///////////
@@ -208,42 +208,50 @@ function RadarChart(id, data, options) {
 	//Wrapper for the invisible circles on top
 	var blobCircleWrapper = g.selectAll(".radarCircleWrapper")
 		.data(data)
-		.join("g")
+		.join("g") //group for mouseover zone
 		.attr("class", "radarCircleWrapper");
+
 		
-	//Append a set of invisible circles on top for the mouseover pop-up
-	blobCircleWrapper.selectAll(".radarInvisibleCircle")
+	// Append a set of invisible circles on top for the mouseover pop-up
+	blobCircleWrapper
+	.selectAll(".radarInvisibleCircle")
 		.data(function(d,i) { return d; })
 		.join("circle")
 		.attr("class", "radarInvisibleCircle")
 		.attr("cx", function(d,i){ return rScale(d.value) * Math.cos(angleSlice*i - Math.PI/2); })
 		.attr("cy", function(d,i){ return rScale(d.value) * Math.sin(angleSlice*i - Math.PI/2); })
-		.attr("r", config.dotRadius*1.5)
+		.attr("r", config.dotRadius*2)
 		.style("fill", "none")
 		.style("pointer-events", "all")
 		.on("mouseover", function(d,i) {
-			newX =  parseFloat(d3.select(this).attr('cx')) - 10;
-			newY =  parseFloat(d3.select(this).attr('cy')) - 10;
+			newX =  parseFloat(d3.select(this).attr('cx') +- 10);
+			newY =  parseFloat(d3.select(this).attr('cy') +- 10);
 					
 			tooltip
 				.attr('x', newX)
 				.attr('y', newY)
-				.text(Format(+d.value))
+				.text(`${(Format(i.value))} of this demographic values ${(i.axis)}`)
 				.transition()
-				.duration(200)
-				.style('opacity', 1);
+				.duration(100)
+				.style('opacity', 1)
+				.attr("dy", "1em")
+				.call(wrap, config.wrapWidth);
+
+				console.log(i.value);
+				console.log(d);
 		})
 		.on("mouseout", function(){
-			tooltip.transition().duration(200)
+			tooltip.transition()
+				.duration(200)
 				.style("opacity", 0);
-
-				console.log(d.value);
 		});
 		
-	//Set up the small tooltip for when you hover over a circle
+
+			//Set up the small tooltip for when you hover over a circle
 	var tooltip = g.append("text")
-		.attr("class", "tooltip")
-		.style("opacity", 0);
+	.attr("class", "tooltip")
+	.style("opacity", 1);
+
 	
 	/////////////////////////////////////////////////////////
 	/////////////////// Helper Function /////////////////////

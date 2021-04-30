@@ -43,7 +43,7 @@
     </section>
 
     <section id='chunk1' class='pageBones' class='chartChunks'>
-        <h2> "News Drivers By Demographic"</h2>
+        <h2> "News Drivers" by Demographic </h2>
         <p> People have diverse reasons for tuning into the news, and expectations for what makes a meaningful broadcast vary. Mouse over the points on the radar chart to discover what matters most to each age demographic. </p>
 
         <div id='femaleRadarAll' class='radarSegments'>
@@ -184,10 +184,17 @@
                     <img id='radialKey2' src='./img/radialBar_key-brush.png'></img>
                 </div>
 
+
+
                 <div id='radbarpara' class='paratext'>
                     <p> Adding animation to the videos enhanced audience perceptions of TV news in general, as shown in this radial bar chart. While the change wasn't much, in many cases it was the tiebreaker that bumped these "positive descriptors" over the 50% mark. However, on a per-video basis, the results of animation and graphics are much more noticeable. Take a look at how adding animation enhanced viewers' experience and reactions in the chart below.
                     </p>
                 </div>
+
+                                </section>
+                <section>
+
+                <h3> Descriptors of Animated Videos vs. Conventional </h3>
 
                 <div id="radialBar2" class="radialBar" class='center'>
                 </div>
@@ -207,17 +214,18 @@
                 }).then(function (dataRB_perVid) {
 
                     //set any other options needed
-                    var radialBarOptions = {
+                    let radialBarOptions1 = {
                         w: 400,
                         h: 400,
                         margin: 10,
                         maxValue: 1,
                         levels: 5,
+                        labelScaleFactor: 1.025,
                         color: colorSchemeRB
                     };
 
                     //Call function 
-                    RadialBar("#radialBar1", dataRB_perVid, radialBarOptions);
+                    RadialBar("#radialBar1", dataRB_perVid, radialBarOptions1);
                 });
 
                 d3.json('factors_avg.json', function (d) {
@@ -225,29 +233,32 @@
                 }).then(function (dataRB_avg) {
 
                     //set any other options needed
-                    var radialBarOptions = {
+                    let radialBarOptions2 = {
                         w: 600,
                         h: 600,
-                        margin: 10,
+                        margin: 60, //right now this is doing what labelScaleFactor should
                         maxValue: 1,
                         levels: 5,
+                        labelScaleFactor: 10, //bug
                         color: colorSchemeRB
                     };
 
 
                     //Call function 
-                    RadialBar("#radialBar2", dataRB_avg, radialBarOptions);
+                    RadialBar("#radialBar2", dataRB_avg, radialBarOptions2);
                 });
             </script>
 
     </section>
 
     <section id='chunk3' class='pageBones' class='chartChunks'>
-        <h2> Keywords Used to Describe Animated Stories </h2>
+        <h2> Open-Ended Responses </h2>
+
+        <h3> Keywords Used to Describe Animated Stories </h3>
 
         <div id='lollipop_cloud' class='doubleViz'>
 
-            <div id="lolliCloud">
+            <div id="lolliCloud" class='center'>
                 <svg id="lollipop" class='lollipop' width='1000' height='800'> </svg>
 
                 <div id="cloud"> </div>
@@ -320,7 +331,7 @@
                 let lollyCloudOptions = {
                     lollyWidth: 800,
                     lollyHeight: 700,
-                    lollyMargin: { top: 10, right: 0, bottom: 50, left: 150 },
+                    lollyMargin: { top: 10, right: 0, bottom: 10, left: 150 },
                     color: colorSchemeLolly
                 };
 

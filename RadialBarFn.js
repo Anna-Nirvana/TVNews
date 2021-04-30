@@ -6,9 +6,10 @@ function RadialBar(id, data, options) {
         margin: 10, //the radial margin
         levels: 5, //no. of radial levels to display with axis ticks
         maxValue: 1, //maximum value to be displayed
+        labelScaleFactor: 1.025, //where to place radial labels
         color: 0, //array or scheme of colors to be used
         formatNumber: d3.format('.0%') //use d3-format to specify how the data will be displayed
-    }
+    };
 
     //store chart options above in configuration variable
     if ('undefined' !== typeof options) {
@@ -127,7 +128,8 @@ function RadialBar(id, data, options) {
         .call(displayAxis);
 
     // Labels
-    var labelRadius = barHeight * 1.025;
+    // var labelRadius = barHeight * 1.025;
+    var labelRadius = (barHeight * config.labelScaleFactor);
 
 
     var labels = svg.append('g')

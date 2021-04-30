@@ -1,9 +1,9 @@
-
+//Nadieh Bremmer's radar chart fn, customized and updated for D3 V6
 function RadarChart(id, data, options) {
 	var config = {
 		w: 400,				//dimensions for the circle
 		h: 400,
-		margin: {top: 10, right: 10, bottom: 10, left: 10}, //margins for the chart SVG
+		margin: {top: 10, right: 10, bottom: 15, left: 15}, //margins for the chart SVG
 		levels: 3,				//no. layers of the onion
 		maxValue: 1, 			//value the largest circle reps
 		labelFactor: 1.25, 	//dist. between outermost circle and  labels
@@ -22,9 +22,7 @@ function RadarChart(id, data, options) {
 	}//for i
 	}//if
 
-
-	//Grab the variable names and set them up as axes (replace 'axis' with whatever variable in your data should act as the set of radial axes for the chart)
-
+	//Grab the variable names and set them up as axes (replace 'axis' with whatever should act as the set of radial axes)
 	var allAxis = (data[0].map(function(i, j){return i.axis})),	//Names of each axis
 		total = allAxis.length,					//number of axes
 		radius = Math.min(config.w/2, config.h/2), 	//biggest circle radius
@@ -35,9 +33,8 @@ function RadarChart(id, data, options) {
 	var rScale = d3.scaleLinear()
 		.range([0., radius])
 		.domain([0, config.maxValue]);
-		
 
-		console.log(data);
+		// console.log(data);
 
 	/////////////////////////////////////////////////////////
 	//////////// Create the container SVG and g /////////////
@@ -79,8 +76,8 @@ function RadarChart(id, data, options) {
         .join("circle")
 		.attr("class", "gridCircle")
 		.attr("r", function(d, i){return radius/config.levels*d;})
-		.style("fill", "#CDCDCD")
-		.style("stroke", "#CDCDCD")
+		.style("fill", "#f8f8ff")
+		.style("stroke", "#f8f8ff")
 		.style("fill-opacity", config.opacityCircles)
 		.style("filter" , "url(#glow)");
 
@@ -93,8 +90,8 @@ function RadarChart(id, data, options) {
         .attr("y", function(d){return -d*radius/config.levels;})
         .attr("dy", "0.4em")
         .style("font-size", "10px")
-        .attr("fill", "#737373")
-	   .text(function(d,i) { return Format(config.maxValue * d/config.levels); });
+        .attr("fill", "#f8f8ff")
+		.text(function(d,i) { return Format(config.maxValue * d/config.levels); });
 
 	/////////////////////////////////////////////////////////
 	//////////////////// Draw the axes //////////////////////
@@ -105,6 +102,7 @@ function RadarChart(id, data, options) {
 		.data(allAxis)
 		.join("g") //radial axis group
 		.attr("class", "axis");
+
 	//Append the lines
 	axis.append("line")
 		.attr("x1", 0)
@@ -112,12 +110,14 @@ function RadarChart(id, data, options) {
 		.attr("x2", function(d, i){ return rScale(config.maxValue*1.1) * Math.cos(angleSlice*i - Math.PI/2); })
 		.attr("y2", function(d, i){ return rScale(config.maxValue*1.1) * Math.sin(angleSlice*i - Math.PI/2); })
 		.attr("class", "line")
-		.style("stroke", "white")
-		.style("stroke-width", "2px");
+		.style("stroke", "#f8f8ff")
+		.style("stroke-width", "2px")
+		.style('opacity', 0.5);
 
 	//Append the labels at each axis
 	axis.append("text")
-		.attr("class", "legend")
+		.classed('axisLabel', true)
+		.style('fill', '#f8f8ff')
 		.style("font-size", "11px")
 		.attr("text-anchor", "middle")
 		.attr("dy", "0.35em")
@@ -199,7 +199,7 @@ function RadarChart(id, data, options) {
 		.attr("cx", function(d,i){ return rScale(d.value) * Math.cos(angleSlice*i - Math.PI/2); })
 		.attr("cy", function(d,i){ return rScale(d.value) * Math.sin(angleSlice*i - Math.PI/2); })
 		.style("fill", 'white')
-		.style("fill-opacity", 0.7);
+		.style("fill-opacity", 0.9);
 
 	/////////////////////////////////////////////////////////
 	//////// Append invisible circles for tooltip ///////////
@@ -230,7 +230,7 @@ function RadarChart(id, data, options) {
 			tooltip
 				.attr('x', newX)
 				.attr('y', newY)
-				.text(`${(Format(i.value))} of this demographic values ${(i.axis)}`)
+				.text(`${(Format(i.value))} of this demographic watches for this`)
 				.transition()
 				.duration(100)
 				.style('opacity', 1)
@@ -238,7 +238,6 @@ function RadarChart(id, data, options) {
 				.call(wrap, config.wrapWidth);
 
 				console.log(i.value);
-				console.log(d);
 		})
 		.on("mouseout", function(){
 			tooltip.transition()
@@ -250,7 +249,9 @@ function RadarChart(id, data, options) {
 			//Set up the small tooltip for when you hover over a circle
 	var tooltip = g.append("text")
 	.attr("class", "tooltip")
-	.style("opacity", 1);
+	.style("opacity", 1)
+	.style('color', '#f8f8ff')
+	.attr('z-index', 5);
 
 	
 	/////////////////////////////////////////////////////////

@@ -1,10 +1,10 @@
 function DrawLolly(id, data, options) {
 
     var config = {
-        lollyWidth: 1000, //dimensions for the lollipop chart
-        lollyHeight: 800,
+        lollyWidth: 500, //dimensions for the lollipop chart
+        lollyHeight: 500,
         lollyMargin: {top: 10, right: 10, bottom: 10, left: 50}, //margins for the chart SVG
-        color: 0 // placeholder for the color function
+        color: d3.interpolateViridis() // placeholder for the color function
     }
 
     //store options in the config variable above
@@ -21,9 +21,6 @@ function DrawLolly(id, data, options) {
 
     //LOLLIPOP CHART
 
-    // //Remove whatever chart with the same id/class was present before
-	// d3.select(id).select("svg").remove();
-
     //grab page element and set up canvas
     lolly.svg = d3.select(id); //append svg here if not on page already
     lolly.margin = config.lollyMargin;
@@ -32,7 +29,7 @@ function DrawLolly(id, data, options) {
     lolly.innerHeight = lolly.height - lolly.margin.top - lolly.margin.bottom;
 
     //set up group for the drawing
-    lolly.g = lolly.svg.append('g')
+    // lolly.g = lolly.svg.append('g')
     // .attr('transform', `translate(${lolly.margin.left},${lolly.margin.top})`);
 
     //Create an array for the domain
@@ -54,10 +51,9 @@ function DrawLolly(id, data, options) {
         .attr('transform', `translate(-0, ${lolly.height - lolly.margin.bottom})`)
         .call(d3.axisBottom(lolly.xScale)
             //remove x axis tick marks
-            .tickSize(0)
-            )
-        .selectAll('text', 'g')
-            .attr('classed', 'axis-label', true)
+            .tickSize(0))
+        .selectAll('text')
+            .attr('classed', 'axisLabel', true)
             .attr('font-family', 'Open Sans')
             .attr("transform", "translate(0,10)")
             .style('text-anchor', 'center');
@@ -68,15 +64,14 @@ function DrawLolly(id, data, options) {
         .attr("transform", `translate(${lolly.margin.left}, 0)`)
         .call(d3.axisLeft(yScale)
             //remove y axis tick marks
-            .tickSize(0)
-            )
+            .tickSize(0))
         .attr("x", 4)
         .attr("dy", -4)
         .selectAll('text')
             .attr('x', -10)
             .attr('font-family', 'Open Sans')
             .attr("transform", "translate(-10,0)rotate(-20)")
-            .attr('classed', 'axis-label', true)
+            .classed('axisLabel', true)
             .style('text-anchor', 'end');
 
     // axis.tickSize(0);
@@ -91,7 +86,7 @@ function DrawLolly(id, data, options) {
         .attr("y1", function (d) { return lolly.yScale(d.longText); })
         .attr("y2", function (d) { return lolly.yScale(d.longText); })
         .attr("stroke", function (d, i) { return config.color(i); })
-        .attr('opacity', 0.2)
+        .attr('opacity', 1)
         .attr('stroke-width', 40)
         //INTCTV LINK
         .on('mouseover', function (e, d) {
@@ -99,7 +94,7 @@ function DrawLolly(id, data, options) {
             let itemC = d.shortText;
 
             lolly.lines.attr('opacity', 0.2);
-            // lolly.pops.attr('opacity', 0.2);
+            lolly.pops.attr('opacity', 0.2);
             hoverCloud.attr('opacity', 0.2);
 
             d3.select(this)
@@ -116,9 +111,9 @@ function DrawLolly(id, data, options) {
         })
         .on('mouseout', function () {
 
-            hoverCloud.attr('opacity', 1);
             lolly.pops.attr('opacity', 1);
             lolly.lines.attr('opacity', 1);
+            hoverCloud.attr('opacity', 1);
 
         });
 
@@ -131,13 +126,12 @@ function DrawLolly(id, data, options) {
         .attr("r", "20")
         .style("fill", function (d, i) { return config.color(i); })
         .attr("stroke", "none")
-        .classed('hoverPops', true)
         //INTCTV LINK
         .on('mouseover', function (e, d) {
             let item = d.shortText;
 
             lolly.lines.attr('opacity', 0.2);
-            // lolly.pops.attr('opacity', 0.2);
+            lolly.pops.attr('opacity', 0.2);
             hoverCloud.attr('opacity', 0.2);
 
             lolly.lines.filter(function (dd) {
@@ -154,10 +148,8 @@ function DrawLolly(id, data, options) {
         })
         .on('mouseout', function () {
 
-            lolly.lines
-                .attr('opacity', 0.2);
-                // .attr('stroke-width', 1);
             lolly.pops.attr('opacity', 1);
+            lolly.lines.attr('opacity', 1);
             hoverCloud.attr('opacity', 1);
 
         });
@@ -166,8 +158,8 @@ function DrawLolly(id, data, options) {
     //WORD CLOUD
 
     //dimensions for the cloud; make sure to account for varying rotations of long edge words!
-    wc.width = lolly.width / 2;
-    wc.height = lolly.height / 2;
+    wc.width = lolly.width / 1.7;
+    wc.height = lolly.height / 1.7;
 
     //filter down the data to just the short word versions and values
     let kw_data_cloudFilt = data.filter(function (d) {
@@ -178,10 +170,10 @@ function DrawLolly(id, data, options) {
     wc.layout = d3.layout.cloud()
         .size([wc.width, wc.height])
         .words(kw_data_cloudFilt)
-        .padding(2)
-        .rotate(function () { return (~~(Math.random() * 6) - 2) * 20; })
+        .padding(1.2)
+        .rotate(function () { return (~~(Math.random() * 6) - 2) * 10; })
         .font("Open Sans")
-        .fontSize(function (d) { return d.size + 10; })
+        .fontSize(function (d) { return d.size + 8; })
         .spiral("archimedean")
         //call draw function
         .on("end", draw);
@@ -190,15 +182,15 @@ function DrawLolly(id, data, options) {
     wc.layout.start();
 
     //Jason Davies' word cloud drawing function
-    function draw(data) {
+    function draw() {
         d3.select("#lollipop")
             .append("g")
-            .attr("transform", "translate(" + (lolly.xScale(30)) + "," + (wc.height) + ")")
-            .attr('z-index', '2')
+            .attr("transform", "translate(" + (lolly.xScale(32)) + "," + (lolly.yScale('time')) + ")")
+            // .attr('z-index', '2')
             .selectAll("text")
-            .data(data)
+            .data(kw_data_cloudFilt)
             .join("text")
-            .style("font-size", function (d) { return d.size + "px"; })
+            .style("font-size", function (d) { return d.size + "pt"; })
             .style("font-family", "Open Sans")
             .style("fill", function (d, i) { return config.color(i); })
             .attr("text-anchor", "middle")
@@ -225,7 +217,6 @@ function DrawLolly(id, data, options) {
             lolly.lines.filter(function (dd) {
                 return dd.longText === item;
             })
-                // .attr('stroke-width', 5)
                 .attr('opacity', 1);
 
             lolly.pops.filter(function (dd) {
@@ -238,10 +229,8 @@ function DrawLolly(id, data, options) {
         })
         .on('mouseout', function () {
 
-            lolly.lines
-                // .attr('stroke-width', 1)
-                .attr('opacity', 0.2)
             lolly.pops.attr('opacity', 1);
+            lolly.lines.attr('opacity', 1);
             hoverCloud.attr('opacity', 1);
 
         });

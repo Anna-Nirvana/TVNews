@@ -8,6 +8,8 @@
     <!-- Google fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap" rel="stylesheet">
 
 
     <!-- D3.js V6 and jQuery -->
@@ -29,131 +31,174 @@
 <body>
 
     <section id='title' class='pageBones'>
-        <h1> Exploring Animation in Television News </h1>
+        <h1> Exploring the Role of Animation in 
+            Television News </h1>
         <p id='subtitle'> with the Reinventing Local TV News Project, SmithGeiger, and the Stanton Foundation </p>
+        <p id='subtitle'> Anna Campbell | Viz Tech II | Spring 2021 </p>
     </section>
 
     <section id='intro' class='pageBones'>
-        <p> Intro to the project Intro to the project Intro to the project Intro to the project Intro to the project
-            Intro to the project Intro to the project Intro to the project Intro to the project Intro to the project
-            Intro to the project. </p>
+        <p> Team members at Northeastern University’s School of Journalism are wrapping up the second phase of a project called <i>Reinventing Local TV News (RLTVN)</i> this spring. Through industry partnerships with television stations WLS-Chicago and WCVB-Boston, as well as with audience analytics firm SmithGeiger, we are learning what it takes to build the newsroom of the future -- in a time when information is plentiful, but adequate tools to make sense of it are not. Last year, the team made a striking discovery about the potential of animation and graphics to substantially expand a story's clarity and impact. This year, we conducted an extensive survey of news consumers across Boston and Chicago. Through the survey we learned about attitudes held by various demographics about news today, as well as solicited responses to A-B testing of short video news segments produced with and without additional animation and graphics.
+             </p>
     </section>
 
     <section id='chunk1' class='pageBones' class='chartChunks'>
-        <h2> News Drivers</h2>
-        <p> Instructions for how to interpret the visualization below. Instructions for how to interpret the
-            visualization below. </p>
+        <h2> "News Drivers By Demographic"</h2>
+        <p> People have diverse reasons for tuning into the news, and expectations for what makes a meaningful broadcast vary. Mouse over the points on the radar chart to discover what matters most to each age demographic. </p>
 
-        <div id='radar_spider_charts' class='viz'>
+        <div id='femaleRadarAll' class='radarSegments'>
+            <h3> Female demographics </h3>
 
-            <div id="radarChartF" class='radarChartF'>
-                <h3> News drivers: female demographics </h3>
-            </div>
-            <div id="radarChartM" class='radarChartM'>
-                <h3> News drivers: male demographics </h3>
-            </div>
-            <div id="radarChartY" class='radarChartY'>
-                <h3> News drivers: youth demographics </h3>
+            <div id="radarChartF" class='radarChartF' class='radarSmallMultiples'>
             </div>
 
-            <!-- SCRIPT REF TO BUILD THE RADAR CHARTS -->
-            <script>
-
-                var margin = { top: 100, right: 100, bottom: 100, left: 100 },
-                    width = Math.min(700, window.innerWidth - 10) - margin.left - margin.right,
-                    height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
-
-                //Load data
-                d3.json('./newsDrivers.json', function (d) {
-                    return d;
-                }).then(function (data) {
-
-                    //rearrange arrays to display layers & be accessed by RadarChart fn:
-
-                    //female demo
-                    data.F = [];
-                    data.F.push(data[0].Female.lateTeens_earlyTwenties);
-                    data.F.push(data[0].Female.lateTwenties_earlyThirties);
-                    data.F.push(data[0].Female.lateThirties_earlyForties);
-                    data.F.push(data[0].Female.lateForties_earlyFifties);
-
-                    //male demo
-                    data.M = [];
-                    data.M.push(
-                        data[0].Male.lateTeens_earlyTwenties,
-                        data[0].Male.lateTwenties_earlyThirties,
-                        data[0].Male.lateThirties_earlyForties,
-                        data[0].Male.lateForties_earlyFifties
-                    );
-
-                    //youth demos incl. female/male
-                    data.Y = []
-                    data.Y.push(
-                        data[0].Female.lateTeens_earlyTwenties,
-                        data[0].Female.lateTwenties_earlyThirties,
-                        data[0].Male.lateTeens_earlyTwenties,
-                        data[0].Female.lateTwenties_earlyThirties
-                    );
-                    //...repeat for any other combo/comparisons of interest!
-
-                    //Draw
-
-                    colorSchemeRadar =
-                        d3.scaleOrdinal()
-                            .domain([data])
-                            .range(['#482173', '#2e6f8e', '#29af7f', '#bddf26']);
-
-                    var radarChartOptions = {
-                        w: width,
-                        h: height,
-                        margin: margin,
-                        maxValue: 0.95,
-                        levels: 5,
-                        color: colorSchemeRadar
-                    };
-
-                    //Call function 
-                    RadarChart(".radarChartF", data.M, radarChartOptions);
-                    RadarChart(".radarChartM", data.F, radarChartOptions);
-                    RadarChart(".radarChartY", data.Y, radarChartOptions);
-
-                });
-
-            </script>
-
-            <!-- <div id='legend1' class="legends">
-                <div id="one">Age 18-24</div>
-                <div id="two">Age 25-34</div>
-                <div id="three">Age 35-44</div>
-                <div id="four">Age 45-54</div>
-            </div> -->
-
-            <div id = 'radarInfoBox'> </div>
-
-            <p> RADAR_SPIDER analysis para. analysis para. analysis para. analysis para. analysis para. analysis para.
-                analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para.
-                analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para.
-                analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para.
-            </p>
         </div>
+
+        <!-- <div id='radialFirstRow'> -->
+        <div id='maleRadarAll' class='radarSegments'>
+
+            <h3> Male demographics </h3>
+
+            <div id="radarChartM" class='radarChartM' class='radarSmallMultiples'>
+            </div>
+
+        </div>
+
+        <div id='radarKeyM' class='keyR' class='center'>
+            <img src='./img/Agedemos-brush.png' class='keyImg'></img>
+        </div>
+
+        <div id='youngRadarAll' class='radarSegments'>
+
+            <h3> Younger demographics </h3>
+
+            <div id="radarChartY" class='radarChartY' class='radarSmallMultiples'>
+            </div>
+
+            <div id='radarKeyY' class='keyR' class='center'>
+                <img src='./img/Youthdemo-brush.png' class='keyImg'></img>
+            </div>
+
+        </div>
+
+        <div id='midRadarAll' class='radarSegments'>
+
+            <h3> Middle-aged demographics </h3>
+            <div id="radarChartO" class='radarChartO' class='radarSmallMultiples'>
+            </div>
+
+            <div id='radarKeyO' class='keyR' class='center'>
+                <img src='./img/Middemo-brush.png' class='keyImg' class='center'></img>
+            </div>
+
+        </div>
+
+
+
+        <!-- SCRIPT REF TO BUILD THE RADAR CHARTS -->
+        <script>
+
+            var margin = { top: 80, right: 80, bottom: 80, left: 80 },
+                width = 500;
+            height = 500;
+
+            //Load data
+            d3.json('./newsDrivers.json', function (d) {
+                return d;
+            }).then(function (data) {
+
+                //rearrange arrays to display layers & be accessed by RadarChart fn:
+
+                //female demo
+                data.F = [];
+                data.F.push(
+                    data[0].Female.lateTeens_earlyTwenties,
+                    data[0].Female.lateTwenties_earlyThirties,
+                    data[0].Female.lateThirties_earlyForties,
+                    data[0].Female.lateForties_earlyFifties);
+
+                //male demo
+                data.M = [];
+                data.M.push(
+                    data[0].Male.lateTeens_earlyTwenties,
+                    data[0].Male.lateTwenties_earlyThirties,
+                    data[0].Male.lateThirties_earlyForties,
+                    data[0].Male.lateForties_earlyFifties);
+
+                //youth demos incl. female/male
+                data.Y = []
+                data.Y.push(
+                    data[0].Female.lateTeens_earlyTwenties,
+                    data[0].Female.lateTwenties_earlyThirties,
+                    data[0].Male.lateTeens_earlyTwenties,
+                    data[0].Male.lateTwenties_earlyThirties);
+
+                //middle aged demos incl. female/male
+                data.O = []
+                data.O.push(
+                    data[0].Male.lateThirties_earlyForties,
+                    data[0].Male.lateForties_earlyFifties,
+                    data[0].Female.lateThirties_earlyForties,
+                    data[0].Female.lateForties_earlyFifties);
+
+                //...repeat for any other combo/comparisons of interest!
+
+                // set color scheme and options for all charts
+                colorSchemeRadar =
+                    d3.scaleOrdinal()
+                        .domain([data])
+                        .range(['#482173', '#2e6f8e', '#29af7f', '#bddf26']);
+
+                var radarChartOptions = {
+                    w: 350,
+                    h: 350,
+                    margin: margin,
+                    maxValue: 1,
+                    levels: 5,
+                    color: colorSchemeRadar
+                };
+
+                // call function to draw each chart with the same specifications
+                RadarChart(".radarChartF", data.F, radarChartOptions);
+                RadarChart(".radarChartM", data.M, radarChartOptions);
+                RadarChart(".radarChartY", data.Y, radarChartOptions);
+                RadarChart(".radarChartO", data.O, radarChartOptions);
+
+            });
+
+        </script>
+
+        <p> 
+            Many stations are interested in attracting a younger audience. In addition to investing in a robust online presence, young people don't generally cite innovative graphics or  a contemporary aesthetic as a reason to tune into the news. 
+        </p>
+
     </section>
 
     <section id='chunk2' class='pageBones' class='chartChunks'>
-        <h2> Animation Responses </h2>
-        <p> 1. Migrate script from v3 to v6. 2. Put in external script file and clean up comments. 3. Add miniscript
-            into html to reference the file. </p>
+        <h2> Responses to Animated Story Version </h2>
 
-        <div id='radial_bar_charts' class='viz'>
+                <div id="radialBar1" class="radialBar">
+                </div>
 
+                <div class='keyRB'>
+                    <img id='radialKey2' src='./img/radialBar_key-brush.png'></img>
+                </div>
 
+                <div id='radbarpara' class='paratext'>
+                    <p> Adding animation to the videos enhanced audience perceptions of TV news in general, as shown in this radial bar chart. While the change wasn't much, in many cases it was the tiebreaker that bumped these "positive descriptors" over the 50% mark. However, on a per-video basis, the results of animation and graphics are much more noticeable. Take a look at how adding animation enhanced viewers' experience and reactions in the chart below.
+                    </p>
+                </div>
+
+                <div id="radialBar2" class="radialBar" class='center'>
+                </div>
 
             <!-- SCRIPT REF TO BUILD THE RADIAL BAR -->
             <script>
 
                 //set color variable/fn for both charts
                 colorSchemeRB =
-                d3.scaleOrdinal()
-                    .range(['#2e6f8e', '#29af7f']);
+                    d3.scaleOrdinal()
+                        .range(['#2e6f8e', '#29af7f']);
 
 
                 //load data and do any rearranging nec
@@ -161,13 +206,11 @@
                     return d;
                 }).then(function (dataRB_perVid) {
 
-
-
                     //set any other options needed
                     var radialBarOptions = {
-                        w: 800,
-                        h: 800,
-                        margin: 40,
+                        w: 400,
+                        h: 400,
+                        margin: 10,
                         maxValue: 1,
                         levels: 5,
                         color: colorSchemeRB
@@ -181,13 +224,11 @@
                     return d;
                 }).then(function (dataRB_avg) {
 
-
-
                     //set any other options needed
                     var radialBarOptions = {
-                        w: 800,
-                        h: 800,
-                        margin: 40,
+                        w: 600,
+                        h: 600,
+                        margin: 10,
                         maxValue: 1,
                         levels: 5,
                         color: colorSchemeRB
@@ -199,122 +240,100 @@
                 });
             </script>
 
-            <div id="radialBar1" class="radialBar1">
-                <h3> Animation - per vid </h3>
-            </div>
-            <div id="radialBar2" class="radialBar2">
-                <h3> Animation - general avgs </h3>
-            </div>
-
-            <div id='legend2' class='legends'>
-                <!-- a legend for the radial bar -->
-            </div>
-
-            <p> RADIAL_BAR analysis para. analysis para. analysis para. analysis para. analysis para. analysis para.
-                analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para.
-                analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para.
-                analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para.
-            </p>
-        </div>
     </section>
 
     <section id='chunk3' class='pageBones' class='chartChunks'>
-        <h2> Open-Ended Keywords </h2>
-        <p> Instructions for how to interpret the visualizations below. Instructions for how to interpret the
-            visualizations below. </p>
+        <h2> Keywords Used to Describe Animated Stories </h2>
 
-        <div id='lollipop_cloud' class='viz'>
+        <div id='lollipop_cloud' class='doubleViz'>
 
-            <h3> Use of keywords </h3>
-            <div id="lollipop_chart">
+            <div id="lolliCloud">
                 <svg id="lollipop" class='lollipop' width='1000' height='800'> </svg>
-                <script>
 
-                    // load and parse the sorted data, one version for each chart
-                    const kw_data = [
-                        { "shortText": "visual", "longText": "visual(s/ly/ize)", "size": 43 },
-                        { "shortText": "easily", "longText": "easy/easily", "size": 41 },
-                        { "shortText": "makes", "longText": "made/make(s)", "size": 39 },
-                        { "shortText": "storytelling", "longText": "story/storytelling", "size": 38 },
-                        { "shortText": "understand", "longText": "understand(ing/able)/comprehend)", "size": 35 },
-                        { "shortText": "information", "longText": "information/informative", "size": 34 },
-                        { "shortText": "animation", "longText": "animation/animated", "size": 30 },
-                        { "shortText": "helpful", "longText": "help(ful/ing)/aid", "size": 26 },
-                        { "shortText": "interesting", "longText": "interest(ed/ing)", "size": 22 },
-                        { "shortText": "shows", "longText": "show(s)", "size": 17 },
-                        { "shortText": "details", "longText": "detail(s/ed/ing)", "size": 16 },
-                        { "shortText": "points", "longText": "point(s)", "size": 14 },
-                        { "shortText": "numbers", "longText": "number(s)/data", "size": 13 },
-                        { "shortText": "clear", "longText": "clear(er)", "size": 12 },
-                        { "shortText": "follow", "longText": "follow", "size": 12 },
-                        { "shortText": "great", "longText": "good/great", "size": 12 },
-                        { "shortText": "news", "longText": "news", "size": 11 },
-                        { "shortText": "(pay) attention", "longText": "(pay) attention", "size": 11 },
-                        { "shortText": "comparison", "longText": "statistic(s)/comparison", "size": 9 },
-                        { "shortText": "explain", "longText": "explain(ed/ing)/explanation(s)", "size": 9 },
-                        { "shortText": "location", "longText": "map(s)/area/location", "size": 9 },
-                        { "shortText": "giving", "longText": "give/giving", "size": 8 },
-                        { "shortText": "appealing", "longText": "appealing", "size": 7 },
-                        { "shortText": "happened", "longText": "happened", "size": 7 },
-                        { "shortText": "relevant", "longText": "relevant", "size": 7 },
-                        { "shortText": "feel", "longText": "feel", "size": 6 },
-                        { "shortText": "memorable", "longText": "memorable/remember", "size": 6 },
-                        { "shortText": "works", "longText": "work(s/ed)", "size": 6 },
-                        { "shortText": "comprehensive", "longText": "full/entire/comprehensive", "size": 6 },
-                        { "shortText": "people", "longText": "people", "size": 5 },
-                        { "shortText": "time", "longText": "time", "size": 5 },
-                        { "shortText": "engaging", "longText": "engag(ed/ing)", "size": 5 },
-                        { "shortText": "graphs", "longText": "graph(s)", "size": 5 },
-                        { "shortText": "impact", "longText": "impact(ful)", "size": 5 },
-                        { "shortText": "important", "longText": "important", "size": 5 },
-                        { "shortText": "picture", "longText": "picture/image(s)/depiction", "size": 5 },
-                        { "shortText": "cool", "longText": "cool(er)", "size": 5 },
-                        { "shortText": "compelling", "longText": "compelling", "size": 4 },
-                        { "shortText": "hear", "longText": "hear(ing)", "size": 4 },
-                        { "shortText": "simple", "longText": "simple", "size": 4 },
-                        { "shortText": "subject", "longText": "subject/topic(s)", "size": 4 },
-                        { "shortText": "provide", "longText": "provide(s/d)", "size": 4 },
-                        { "shortText": "attractive", "longText": "attractive", "size": 4 },
-                        { "shortText": "boring", "longText": "(less) boring", "size": 4 },
-                        { "shortText": "broke", "longText": "broke (up the story)", "size": 3 },
-                        { "shortText": "eye", "longText": "eye", "size": 3 },
-                        { "shortText": "fact", "longText": "fact", "size": 3 },
-                        { "shortText": "love", "longText": "love", "size": 3 },
-                        { "shortText": "illustrate", "longText": "illustrate/illustration", "size": 3 },
-                        { "shortText": "caught", "longText": "catch(ing)/caught", "size": 3 }
-                    ]
-
-                    let colorSchemeLolly = d3.scaleSequential()
-                        .domain([0, 50])
-                        .interpolator(d3.interpolateViridis);
-
-                    let lollyCloudOptions = {
-                        lollyWidth: 1000,
-                        lollyHeight: 800,
-                        lollyMargin: { top: 10, right: 0, bottom: 50, left: 150 },
-                        color: colorSchemeLolly
-                    };
-
-                    DrawLolly('#lollipop', kw_data, lollyCloudOptions);
-
-                </script>
                 <div id="cloud"> </div>
 
             </div>
 
-            <p> LOLLIPOP_CLOUD analysis para. analysis para. analysis para. analysis para. analysis para. analysis
-                para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para.
-                analysis para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis
-                para. analysis para. analysis para. analysis para. analysis para. analysis para. analysis para.
-                analysis para. analysis para. </p>
-        </div>
+            <p> In addition to the A/B screening tests and multiple choice demographic survey questions, our survey included open-ended questions. The vast majority of participants who stated that they prefered the animated version over its conventional counterpart. When asked to elaborate on why, these were the most prevalent keywords that came up.  </p>
+
+            <!-- SCRIPT REF TO BUILD THE DOUBLE INTERACTIVE CHART -->
+            <script>
+
+                // load and parse the sorted data, one version for each chart
+                const kw_data = [
+                    { "shortText": "visual", "longText": "visual(s/ly/ize)", "size": 43 },
+                    { "shortText": "easy", "longText": "easy/easily", "size": 41 },
+                    { "shortText": "makes", "longText": "made/make(s)", "size": 39 },
+                    { "shortText": "storytelling", "longText": "story/storytelling", "size": 38 },
+                    { "shortText": "understanding", "longText": "understand(ing/able)/comprehend)", "size": 35 },
+                    { "shortText": "information", "longText": "information/informative", "size": 34 },
+                    { "shortText": "animation", "longText": "animation/animated", "size": 30 },
+                    { "shortText": "helpful", "longText": "help(ful/ing)/aid", "size": 26 },
+                    { "shortText": "interesting", "longText": "interest(ed/ing)", "size": 22 },
+                    { "shortText": "shows", "longText": "show(s)", "size": 17 },
+                    { "shortText": "details", "longText": "detail(s/ed/ing)", "size": 16 },
+                    { "shortText": "points", "longText": "point(s)", "size": 14 },
+                    { "shortText": "numbers", "longText": "number(s)/data", "size": 13 },
+                    { "shortText": "clear", "longText": "clear(er)", "size": 12 },
+                    { "shortText": "follow", "longText": "follow", "size": 12 },
+                    { "shortText": "great", "longText": "good/great", "size": 12 },
+                    { "shortText": "news", "longText": "news", "size": 11 },
+                    { "shortText": "(pay) attention", "longText": "(pay) attention", "size": 11 },
+                    { "shortText": "comparison", "longText": "statistic(s)/comparison", "size": 9 },
+                    { "shortText": "explain", "longText": "explain(ed/ing)/explanation(s)", "size": 9 },
+                    { "shortText": "location", "longText": "map(s)/area/location", "size": 9 },
+                    { "shortText": "giving", "longText": "give/giving", "size": 8 },
+                    { "shortText": "appealing", "longText": "appealing", "size": 7 },
+                    { "shortText": "happened", "longText": "happened", "size": 7 },
+                    { "shortText": "relevant", "longText": "relevant", "size": 7 },
+                    { "shortText": "feel", "longText": "feel", "size": 6 },
+                    { "shortText": "memorable", "longText": "memorable/remember", "size": 6 },
+                    { "shortText": "works", "longText": "work(s/ed)", "size": 6 },
+                    { "shortText": "comprehensive", "longText": "full/entire/comprehensive", "size": 6 },
+                    { "shortText": "people", "longText": "people", "size": 5 },
+                    { "shortText": "time", "longText": "time", "size": 5 },
+                    { "shortText": "engaging", "longText": "engag(ed/ing)", "size": 5 },
+                    { "shortText": "graphs", "longText": "graph(s)", "size": 5 },
+                    { "shortText": "impact", "longText": "impact(ful)", "size": 5 },
+                    { "shortText": "important", "longText": "important", "size": 5 },
+                    { "shortText": "picture", "longText": "picture/image(s)/depiction", "size": 5 },
+                    { "shortText": "cool", "longText": "cool(er)", "size": 5 },
+                    { "shortText": "compelling", "longText": "compelling", "size": 4 },
+                    { "shortText": "hear", "longText": "hear(ing)", "size": 4 },
+                    { "shortText": "simple", "longText": "simple", "size": 4 },
+                    { "shortText": "subject", "longText": "subject/topic(s)", "size": 4 },
+                    { "shortText": "provide", "longText": "provide(s/d)", "size": 4 },
+                    { "shortText": "attractive", "longText": "attractive", "size": 4 },
+                    { "shortText": "(less) boring", "longText": "(less) boring", "size": 4 },
+                    { "shortText": "broke", "longText": "broke (up the story)", "size": 3 },
+                    { "shortText": "eye", "longText": "eye", "size": 3 },
+                    { "shortText": "fact", "longText": "fact", "size": 3 },
+                    { "shortText": "love", "longText": "love", "size": 3 },
+                    { "shortText": "illustrate", "longText": "illustrate/illustration", "size": 3 },
+                    { "shortText": "caught", "longText": "catch(ing)/caught", "size": 3 }
+                ]
+
+                let colorSchemeLolly = d3.scaleSequential()
+                    .domain([0, 50])
+                    .interpolator(d3.interpolateViridis);
+
+                let lollyCloudOptions = {
+                    lollyWidth: 800,
+                    lollyHeight: 700,
+                    lollyMargin: { top: 10, right: 0, bottom: 50, left: 150 },
+                    color: colorSchemeLolly
+                };
+
+                DrawLolly('#lollipop', kw_data, lollyCloudOptions);
+
+            </script>
+
     </section>
 
     <section id='conclusion' class='pageBones'>
 
-        <p>Conclusion, acknowledgements, next steps, and nitty gritty data details text. Conclusion, acknowledgements,
-            next steps, and nitty gritty data details text. Conclusion, acknowledgements, next steps, and nitty gritty
-            data details text. </p>
+        <p> Thanks to Nadieh Bremmer, Brice Pierre and Jason Davies for the inspiration and starting templates for the radar chart/spiderplot, radial bar chart, and word cloud placement alogrithm, respectively. </p>
+
     </section>
 
 </body>

@@ -1,19 +1,28 @@
 /*OVERALL PAGE*/
+
 body {
+    /* display: inline-block; */
     font-family: 'Open Sans', sans-serif;
-    font-size: 12px;
     font-weight: 300;
-    fill: #242424;
-    color: rgb(66, 65, 65);
+    /* fill: #242424; */
+    color: white;
     text-align: justify;
-    /* text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff; */
     cursor: default;
     margin: 10vh;
+    margin-right: 10vw;
+    overflow-x: hidden;
+    align-content: center;
+    background-color: rgb(122, 119, 119);
+}
+
+.pageBones{
+    margin-top: 100px;
 }
 
 h1 {
     font-family: 'Raleway';
-    font-size: x-large;
+    font-size: 48pt;
+    text-align: left;
 }
 
 #subtitle {
@@ -21,64 +30,147 @@ h1 {
 }
 
 h2, title {
-
-    background-color: #ffe1b393;
+    /* background-color: #ffe1b393; */
     border-radius: 8px;
-
 }
 
 h2 {
-    font-size: large;
     font-weight: bold;
     padding: 10px;
     padding-top: 3vh;
     padding-bottom: 3vh;
+    text-align: left;
+    font-size: 26pt;
+}
+
+h3 {
     text-align: center;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.801), 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+    font-family: 'Montserrat';
+    font-weight: bold;
+
 }
 
-#title{
-    background-color: #ffe1b393;
-    border-radius: 8px;
-    padding: 30px;
-    color: navy;
+
+p {
+    font-family: 'Open Sans';
+    font-size: large;
 }
 
-.chartChunks{
-    padding: 0px
+.radarSegments  {
+    display: inline-block;
 }
 
-/* CHART CHUNK #1: RADAR CHART */
-.radarChartM,
-    .radarChartF {
-        display: inline-block;
-        position: relative;
-        max-height: 50vh;
-        margin: 0;
-        scale: 0.8;
-    }
+#radarKeyM {
+    margin-left: 23vw;
+    position: sticky;
+    width: 500px;
 
-    .legend {
-        font-family: sans-serif;
-        fill: #333333;
-    }
+}
 
-    /* CHART CHUNK #2: RADIAL BAR */
 
-    .axis path,
-    .axis line {
-        fill: none;
-        stroke: #482173;
-        shape-rendering: crispEdges;
-    }
+/* .radarSmallMultiples {
+    position: fixed;
+} */
 
-    .x.axis path {
-        display: none;
-    }
+#radarKeyY, #radarKeyO {
+    /* width: 20vw; */
+}
+
+#maleRadarAll, #midRadarAll {
+    margin-left: 3vw;
+}
+
+
+.keyImg {
+    width: 400px;
+    margin-left: 50px;
+}
+
+.center {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+/* CHART CHUNK #2: RADIAL BAR */
+
+#radialBar1 {
+    float: left;
+}
+
+#radbarpara {
+    /* float: right; */
+    /* margin-top: 10px; */
+    /* margin-left: 65vw; */
+}
+
+#radialBar2 {
+    /* float: right; */
+    position: relative;
+    margin-top: 100px;
+    margin-left: 20vw;
+
+}
+
+#radialKey2 {
+    width: 315px;
+    margin-left: 200px;
+    margin-top: 40px;
+    z-index: 4;
+    /* margin: 30px; */
+}
+
+.paratext {
+    display: block;
+    position: relative;
+    z-index: 1;
+    margin: 30px;
+    margin-left:40vw;
+    margin-bottom: 200px;
+}
+
 
 /* CHART CHUNK #3: WORD CLOUD AND LOLLIPOP */
 
-.axis {
-    /* stroke:#482173;
-    stroke-width: 5; */
+
+#cloud {
+    overflow-x: hidden;
 }
+
+canvas {
+    z-index: 5;
+}
+
+
+/* CHARTS GENERAL */
+
+.x.axis path {
+    display: none;
+}
+
+.axis path, .axis line {
+    fill: none;
+    stroke: #f8f8ff;
+    shape-rendering: crispEdges;
+}
+
+    .axis {
+        color: white;
+    }
+
+    .axisLabel {
+        font-size: 14px;
+        color: white;
+    }
+    
+    tspan {
+        font-size: 10px;
+        font-weight: bold;
+        color: white;
+        opacity: 1;
+    }
+
+    svg {
+        /* margin-left: 100px; */
+    }
